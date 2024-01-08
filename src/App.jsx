@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
 	const [number, setNumber] = useState(0);
@@ -15,11 +16,28 @@ function App() {
 	};
 
 	return (
-		<>
-			<p>{import.meta.env.VITE_API_URL}</p>
-			<button onClick={handleClick}>Fetch number</button>
-			<p>{number}</p>
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<>
+							<p>{import.meta.env.VITE_API_URL}</p>
+							<button onClick={handleClick}>Fetch number</button>
+							<p>{number}</p>
+						</>
+					}
+				/>
+				<Route
+					path="/about"
+					element={
+						<>
+							<p>About</p>
+						</>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
