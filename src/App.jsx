@@ -3,31 +3,13 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-	const [number, setNumber] = useState(0);
+	const [product, setProduct] = useState(null);
 
 	const handleClick = () => {
-		// fetch("/api")
-		// 	.then((res) => res.json())
-		// 	.then((data) => setNumber(data.number))
-		// 	.catch((error) => {
-		// 		console.error("Error:", error);
-		// 		if (error.response) {
-		// 			// The request was made and the server responded with a non-2xx status code
-		// 			console.error("Response data:", error.response.data);
-		// 			console.error("Response status:", error.response.status);
-		// 			console.error("Response headers:", error.response.headers);
-		// 		} else if (error.request) {
-		// 			// The request was made but no response was received
-		// 			console.error("Request data:", error.request);
-		// 		} else {
-		// 			// Something happened in setting up the request that triggered an Error
-		// 			console.error("Error message:", error.message);
-		// 		}
-		// 	});
-
-		fetch("https://dummyjson.com/products/1")
+		fetch("/api")
 			.then((res) => res.json())
-			.then((json) => setNumber(json));
+			.then((data) => setProduct(data))
+			.catch((error) => console.error(error));
 	};
 
 	return (
@@ -38,8 +20,14 @@ function App() {
 					element={
 						<>
 							<p>{import.meta.env.VITE_API_URL}</p>
-							<button onClick={handleClick}>Fetch number</button>
-							<p>{number.title}</p>
+							<button onClick={handleClick}>Fetch product</button>
+							{product && (
+								<ul>
+									<li>{product.title}</li>
+									<li>{product.description}</li>
+									<li>{product.price}</li>
+								</ul>
+							)}
 						</>
 					}
 				/>
