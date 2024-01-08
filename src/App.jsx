@@ -6,7 +6,7 @@ function App() {
 	const [product, setProduct] = useState(null);
 
 	const handleClick = () => {
-		fetch("/api", {
+		fetch("https://flask-production-81aa.up.railway.app/", {
 			headers: { Accept: "application/json" },
 		})
 			.then((res) => res.json())
