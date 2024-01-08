@@ -5,7 +5,10 @@ function App() {
 	const [number, setNumber] = useState(0);
 
 	const handleClick = () => {
-		fetch("/api")
+		fetch("/api", {
+			method: "GET",
+			redirect: "follow",
+		})
 			.then((res) => res.json())
 			.then((data) => setNumber(data.number))
 			.catch((error) => console.error(error));
