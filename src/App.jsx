@@ -6,24 +6,28 @@ function App() {
 	const [number, setNumber] = useState(0);
 
 	const handleClick = () => {
-		fetch("/api")
+		// fetch("/api")
+		// 	.then((res) => res.json())
+		// 	.then((data) => setNumber(data.number))
+		// 	.catch((error) => {
+		// 		console.error("Error:", error);
+		// 		if (error.response) {
+		// 			// The request was made and the server responded with a non-2xx status code
+		// 			console.error("Response data:", error.response.data);
+		// 			console.error("Response status:", error.response.status);
+		// 			console.error("Response headers:", error.response.headers);
+		// 		} else if (error.request) {
+		// 			// The request was made but no response was received
+		// 			console.error("Request data:", error.request);
+		// 		} else {
+		// 			// Something happened in setting up the request that triggered an Error
+		// 			console.error("Error message:", error.message);
+		// 		}
+		// 	});
+
+		fetch("https://dummyjson.com/products/1")
 			.then((res) => res.json())
-			.then((data) => setNumber(data.number))
-			.catch((error) => {
-				console.error("Error:", error);
-				if (error.response) {
-					// The request was made and the server responded with a non-2xx status code
-					console.error("Response data:", error.response.data);
-					console.error("Response status:", error.response.status);
-					console.error("Response headers:", error.response.headers);
-				} else if (error.request) {
-					// The request was made but no response was received
-					console.error("Request data:", error.request);
-				} else {
-					// Something happened in setting up the request that triggered an Error
-					console.error("Error message:", error.message);
-				}
-			});
+			.then((json) => setNumber(json));
 	};
 
 	return (
@@ -35,7 +39,7 @@ function App() {
 						<>
 							<p>{import.meta.env.VITE_API_URL}</p>
 							<button onClick={handleClick}>Fetch number</button>
-							<p>{number}</p>
+							<p>{number.title}</p>
 						</>
 					}
 				/>
