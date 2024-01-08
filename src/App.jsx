@@ -9,6 +9,9 @@ function App() {
 		fetch("/api", {
 			method: "GET",
 			redirect: "follow",
+			headers: {
+				"Content-Type": "application/json",
+			},
 		})
 			.then((res) => res.json())
 			.then((data) => setNumber(data.number))
