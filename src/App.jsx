@@ -6,7 +6,9 @@ function App() {
 	const [product, setProduct] = useState(null);
 
 	const handleClick = () => {
-		fetch("/api")
+		fetch("/api", {
+			headers: { Accept: "application/json" },
+		})
 			.then((res) => res.json())
 			.then((data) => setProduct(data))
 			.catch((error) => console.error(error));
