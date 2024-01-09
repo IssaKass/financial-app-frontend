@@ -8,13 +8,13 @@ export default ({ mode }) => {
 	const config = {
 		plugins: [react()],
 		server: {
-			proxy: {
-				"/api": {
-					target: process.env.VITE_API_URL,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, ""),
-				},
-			},
+			// proxy: {
+			// 	"/api": {
+			// 		target: process.env.VITE_API_URL,
+			// 		changeOrigin: true,
+			// 		rewrite: (path) => path.replace(/^\/api/, ""),
+			// 	},
+			// },
 		},
 	};
 
