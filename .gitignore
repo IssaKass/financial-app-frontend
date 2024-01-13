@@ -154,4 +154,7 @@ psd
 thumb
 sketch
 
+### prettier ###
+.prettierrc
+
 # End of https://www.toptal.com/developers/gitignore/api/node,react

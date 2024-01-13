@@ -1,35 +1,23 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
+html,
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  overflow: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer components {
+  .input {
+    @apply rounded-md border bg-white px-2 py-1.5 text-black outline-none transition-shadow focus:ring-1 focus:ring-primary-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white sm:text-sm sm:leading-6;
+  }
+  .label {
+    @apply block text-sm font-medium leading-6 text-neutral-900 dark:text-white;
+  }
+  .circle-center {
+    @apply grid place-items-center rounded-full;
+  }
+  .link {
+    @apply underline;
   }
 }
