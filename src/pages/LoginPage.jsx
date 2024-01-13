@@ -18,11 +18,13 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(userToken);
+
   useEffect(() => {
-    if (userInfo) {
+    if (userToken && userToken) {
       navigate("/analytics");
     }
-  }, [navigate, userInfo]);
+  }, [navigate, userToken]);
 
   const submitForm = (e) => {
     e.preventDefault();

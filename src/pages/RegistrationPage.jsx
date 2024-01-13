@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../features/auth/authActions";
 
 const RegistrationPage = () => {
-  const { loading, userInfo, error, success } = useSelector(
+  const { loading, userToken, error, success } = useSelector(
     (state) => state.auth,
   );
   const dispatch = useDispatch();
@@ -23,10 +23,10 @@ const RegistrationPage = () => {
       navigate("/login");
     }
 
-    if (userInfo) {
+    if (userToken) {
       navigate("/analytics");
     }
-  }, [navigate, userInfo, success]);
+  }, [navigate, userToken, success]);
 
   const submitForm = (e) => {
     e.preventDefault();
