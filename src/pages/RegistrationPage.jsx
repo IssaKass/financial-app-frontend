@@ -24,7 +24,7 @@ const RegistrationPage = () => {
     }
 
     if (userInfo) {
-      navigate("/settings");
+      navigate("/analytics");
     }
   }, [navigate, userInfo, success]);
 
