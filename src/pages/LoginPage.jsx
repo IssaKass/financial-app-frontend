@@ -18,8 +18,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(userToken);
-
   useEffect(() => {
     if (userToken && userToken) {
       navigate("/analytics");
