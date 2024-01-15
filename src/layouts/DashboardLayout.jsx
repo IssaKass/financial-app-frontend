@@ -68,7 +68,7 @@ const DashboardLayout = ({ children }) => {
         </div>
       </aside>
       <div className={isSidebarOpen && "ml-48"}>
-        <div className="bg-neutral-800 p-4">
+        <div className="bg-neutral-100 px-4 py-2 dark:bg-neutral-800">
           <button
             onClick={handleOpenSidebar}
             type="button"

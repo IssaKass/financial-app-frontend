@@ -24,6 +24,7 @@ import {
 } from "react-aria-components";
 import PencilIcon from "@heroicons/react/20/solid/PencilIcon";
 import TrashIcon from "@heroicons/react/20/solid/TrashIcon";
+import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
 import TableColumn from "../Table/TableColumn";
 import TableRow from "../Table/TableRow";
 import TableCell from "../Table/TableCell";
@@ -140,8 +141,8 @@ const ProjectTable = () => {
   };
 
   return (
-    <div className="grid gap-4">
-      <ResizableTableContainer className="w-full overflow-x-auto border dark:border-neutral-700">
+    <div className="grid gap-4 rounded-md bg-neutral-100 p-4 dark:bg-neutral-800">
+      <ResizableTableContainer className="w-full overflow-x-auto rounded-md border dark:border-neutral-700">
         <Table
           aria-label="projects"
           sortDescriptor={sortDescriptor}
@@ -308,7 +309,6 @@ const ProjectTable = () => {
           </TableBody>
         </Table>
       </ResizableTableContainer>
-
       <div className="flex items-center justify-end gap-1">
         <Button
           type="button"
@@ -343,14 +343,26 @@ const ProjectTable = () => {
           <ProjectForm action={ACTION_MODE.ADD} onAdd={handleAddProject} />
         </DialogTrigger>
         <MenuTrigger>
-          <Button aria-label="Menu">Export as</Button>
-          <Popover>
-            <Menu onAction={alert}>
-              <MenuItem id="open">Open</MenuItem>
-              <MenuItem id="rename">Rename…</MenuItem>
-              <MenuItem id="duplicate">Duplicate</MenuItem>
-              <MenuItem id="share">Share…</MenuItem>
-              <MenuItem id="delete">Delete…</MenuItem>
+          <Button
+            aria-label="Menu"
+            className="flex items-center gap-2 rounded border border-primary-600 px-2 py-1 text-sm dark:text-white"
+          >
+            Export as <ChevronDownIcon className="h-4 w-4" />
+          </Button>
+          <Popover className="w-[--trigger-width] rounded border bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">
+            <Menu onAction={alert} className="space-y-2 text-sm">
+              <MenuItem
+                className="cursor-pointer rounded px-2 py-1.5 hover:bg-primary-100 focus:bg-primary-100 dark:hover:bg-primary-600 dark:focus:bg-primary-600"
+                id="csv"
+              >
+                CSV
+              </MenuItem>
+              <MenuItem
+                className="cursor-pointer rounded px-2 py-1.5 hover:bg-primary-100 focus:bg-primary-100 dark:hover:bg-primary-600 dark:focus:bg-primary-600"
+                id="pdf"
+              >
+                PDF
+              </MenuItem>
             </Menu>
           </Popover>
         </MenuTrigger>
