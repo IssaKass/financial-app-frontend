@@ -7,6 +7,7 @@ import {
 } from "../../features/project/projectActions";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
+import axios from "axios";
 import {
   Button,
   Dialog,
@@ -142,8 +143,9 @@ const ProjectTable = () => {
 
   return (
     <div className="grid gap-4 rounded-md bg-neutral-100 p-4 dark:bg-neutral-800">
-      <ResizableTableContainer className="w-full overflow-x-auto rounded-md border dark:border-neutral-700">
+      <ResizableTableContainer className="w-full overflow-x-auto border bg-white dark:border-neutral-700 dark:bg-neutral-900">
         <Table
+          className="min-w-full"
           aria-label="projects"
           sortDescriptor={sortDescriptor}
           onSortChange={setSortDescriptor}
@@ -216,7 +218,7 @@ const ProjectTable = () => {
             >
               End Date
             </TableColumn>
-            <TableColumn width={100}></TableColumn>
+            <TableColumn width={100}>Actions</TableColumn>
           </TableHeader>
           <TableBody
             items={sortedProjects}
@@ -233,16 +235,16 @@ const ProjectTable = () => {
                 <TableCell>{formatSeconds(project.animation)}</TableCell>
                 <TableCell>
                   <span
-                    className={`me-2 rounded px-2 py-0.5 text-sm font-medium tracking-tight
+                    className={`inline-flex items-center rounded-md px-2 py-1 text-sm font-medium capitalize ring-1 ring-inset
                           ${
                             project.status === PROJECT_STATUS.PENDING
-                              ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                              ? "bg-red-50 text-red-600 ring-red-500/50 dark:bg-red-500/10 dark:text-red-400"
                               : project.status === PROJECT_STATUS.PROGRESS
-                                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                                : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                                ? "bg-yellow-50 text-yellow-600 ring-yellow-500/50 dark:bg-yellow-500/10 dark:text-yellow-400"
+                                : "bg-green-50 text-green-600 ring-green-500/50 dark:bg-green-500/10 dark:text-green-400"
                           }`}
                   >
-                    {project.status}
+                    {String(project.status).toLowerCase()}
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(project.start_date)}</TableCell>
@@ -250,7 +252,7 @@ const ProjectTable = () => {
                 <TableCell width={100}>
                   <div className="flex items-center gap-2">
                     <DialogTrigger>
-                      <Button className="circle-center h-8 w-8 hover:bg-primary-600 hover:text-white">
+                      <Button className="circle-center h-8 w-8 hover:bg-neutral-100 dark:hover:bg-neutral-700">
                         <PencilIcon className="h-4 w-4" />
                       </Button>
 
@@ -261,7 +263,7 @@ const ProjectTable = () => {
                       />
                     </DialogTrigger>
                     <DialogTrigger>
-                      <Button className="circle-center h-8 w-8 hover:bg-primary-600 hover:text-white">
+                      <Button className="circle-center h-8 w-8 hover:bg-neutral-100 dark:hover:bg-neutral-700">
                         <TrashIcon className="h-4 w-4" />
                       </Button>
                       <Modal className="fixed left-0 top-0 z-50 grid h-full w-full place-items-center bg-black/50 px-4">

@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <main className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
       <div className="text-center">
-        <h1 className="text-3xl font-black dark:text-white md:text-5xl">
+        <h1 className="text-3xl font-bold dark:text-white md:text-5xl">
           Welcome to Financial
         </h1>
         <div className="mt-8 flex items-center justify-center gap-x-2">

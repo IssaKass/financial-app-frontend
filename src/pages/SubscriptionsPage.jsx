@@ -17,8 +17,8 @@ const SubscriptionsPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto grid max-w-[80rem] gap-4">
-        <div className="grid max-w-[80rem] gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid gap-4">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <SummaryItem
             text="Total Subscriptions"
             value={getTotalSubscriptionsCount(subscriptions)}

@@ -5,15 +5,12 @@ const SummaryList = ({ summaries }) => {
   return (
     <div>
       {summaries.map((summary, index) => (
-        <div key={index}>
-          <div>
-            <SummaryItem
-              text={summary.text}
-              icon={summary.icon}
-              value={summary.value}
-            />
-          </div>
-        </div>
+        <SummaryItem
+          key={index}
+          text={summary.text}
+          icon={summary.icon}
+          value={summary.value}
+        />
       ))}
     </div>
   );
