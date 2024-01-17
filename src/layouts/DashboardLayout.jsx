@@ -93,7 +93,7 @@ const DashboardLayout = ({ children }) => {
           </ul>
         </div>
       </aside>
-      <div className={isSidebarOpen && "ml-48"}>
+      <div className={isSidebarOpen ? "ml-48" : ""}>
         <div className="bg-neutral-100 py-2 dark:bg-neutral-800">
           <div className="container mx-auto flex items-center gap-2 px-4">
             <button
@@ -129,6 +129,11 @@ const DashboardLayout = ({ children }) => {
                   <ArrowsPointingOutIcon className="h-5 w-5" />
                 )}
               </button>
+              <div className="inline-flex items-center rounded-full bg-neutral-500 p-1.5 text-sm font-bold text-white focus:outline-none">
+                <span className="grid h-5 w-5 place-items-center">
+                  {String(userInfo.username).charAt(0).toUpperCase()}
+                </span>
+              </div>
             </div>
           </div>
         </div>

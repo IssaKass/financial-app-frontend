@@ -197,7 +197,13 @@ const ProjectTable = () => {
             >
               Animation
             </TableColumn>
-            <TableColumn id="status" allowsSorting width={150}>
+            <TableColumn
+              id="status"
+              allowsSorting
+              allowsResizing
+              minWidth={120}
+              maxWidth={200}
+            >
               Status
             </TableColumn>
             <TableColumn
