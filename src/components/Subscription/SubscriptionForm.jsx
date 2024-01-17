@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { ACTION_MODE } from "../../utils/constants";
 import {
   Button,
