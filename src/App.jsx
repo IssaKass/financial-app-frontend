@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import HomePage from "./pages/HomePage";
+import Page from "./pages/Page";
 
 function App() {
   return (
@@ -15,15 +16,64 @@ function App() {
       <div className="h-screen bg-white dark:bg-neutral-900">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegistrationPage />} />
+            <Route
+              path="/"
+              element={
+                <Page title="Financial | Home">
+                  <HomePage />
+                </Page>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <Page title="Financial | Login">
+                  <LoginPage />
+                </Page>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Page title="Financial | Register">
+                  <RegistrationPage />
+                </Page>
+              }
+            />
             <Route element={<ProtectedRoute />}>
-              <Route path="/analytics" element={<AnalyticsPage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/subscriptions" element={<SubscriptionsPage />} />
+              <Route
+                path="/analytics"
+                element={
+                  <Page title="Financial | Analytics">
+                    <AnalyticsPage />
+                  </Page>
+                }
+              />
+              <Route
+                path="/projects"
+                element={
+                  <Page title="Financial | Projects">
+                    <ProjectsPage />
+                  </Page>
+                }
+              />
+              <Route
+                path="/subscriptions"
+                element={
+                  <Page title="Financial | Subscriptions">
+                    <SubscriptionsPage />
+                  </Page>
+                }
+              />
             </Route>
-            <Route path="*" element={<NotFoundPage />} />
+            <Route
+              path="*"
+              element={
+                <Page title="Financial | 404: This page could not be found.">
+                  <NotFoundPage />
+                </Page>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </div>
