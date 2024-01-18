@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
 
 const HomePage = () => {
   const { userToken } = useSelector((state) => state.auth);

@@ -1,35 +1,37 @@
+import { parseDate } from "@internationalized/date";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { ACTION_MODE } from "../../utils/constants";
 import {
   Button,
+  CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  DateInput,
+  DateRangePicker,
+  DateSegment,
   Dialog,
+  FieldError,
+  Form,
+  Group,
   Heading,
   Input,
   Label,
   Modal,
-  TextField,
-  Popover,
-  Form,
   ModalOverlay,
   NumberField,
-  DateRangePicker,
-  DateInput,
+  Popover,
   RangeCalendar,
-  CalendarGrid,
-  CalendarCell,
-  Group,
-  DateSegment,
-  CalendarGridHeader,
-  CalendarHeaderCell,
-  CalendarGridBody,
-  FieldError,
+  TextField,
 } from "react-aria-components";
-import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
-import ChevronLeftIcon from "@heroicons/react/20/solid/ChevronLeftIcon";
-import ChevronRightIcon from "@heroicons/react/20/solid/ChevronRightIcon";
-import XMarkIcon from "@heroicons/react/20/solid/XMarkIcon";
-import { parseDate } from "@internationalized/date";
+import {
+  PiCaretDownBold,
+  PiCaretLeftBold,
+  PiCaretRightBold,
+  PiXBold,
+} from "react-icons/pi";
+import { useSelector } from "react-redux";
+import { ACTION_MODE } from "../../utils/constants";
 import { formatDateToYYYYMMDD } from "../../utils/format";
 
 const SubscriptionForm = ({ action, onAdd, onEdit, data }) => {
@@ -70,7 +72,7 @@ const SubscriptionForm = ({ action, onAdd, onEdit, data }) => {
                 onPress={close}
                 className="absolute right-1 top-1 grid h-8 w-8 place-items-center rounded-full text-black hover:bg-primary-200 dark:text-white dark:hover:bg-primary-600"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <PiXBold className="h-5 w-5" />
               </Button>
               <Heading
                 slot="title"
@@ -207,7 +209,7 @@ const SubscriptionForm = ({ action, onAdd, onEdit, data }) => {
                       )}
                     </DateInput>
                     <Button>
-                      <ChevronDownIcon className="h-4 w-4" />
+                      <PiCaretDownBold className="h-4 w-4" />
                     </Button>
                   </Group>
                   <Popover className="rounded-md border bg-white dark:border-neutral-700 dark:bg-neutral-800">
@@ -220,13 +222,13 @@ const SubscriptionForm = ({ action, onAdd, onEdit, data }) => {
                               slot="previous"
                               className="grid h-8 w-8 place-items-center rounded-full hover:bg-primary-100 dark:hover:bg-primary-600"
                             >
-                              <ChevronLeftIcon className="h-6 w-6" />
+                              <PiCaretLeftBold className="h-4 w-4" />
                             </Button>
                             <Button
                               slot="next"
                               className="grid h-8 w-8 place-items-center rounded-full hover:bg-primary-100 dark:hover:bg-primary-600"
                             >
-                              <ChevronRightIcon className="h-6 w-6" />
+                              <PiCaretRightBold className="h-4 w-4" />
                             </Button>
                           </div>
                         </header>
@@ -242,7 +244,7 @@ const SubscriptionForm = ({ action, onAdd, onEdit, data }) => {
                             {(date) => (
                               <CalendarCell
                                 date={date}
-                                className="m-0.5 grid h-8 w-8 place-items-center rounded-sm text-sm font-medium hover:bg-primary-100 selected:bg-primary-200 disabled:text-neutral-500 dark:text-white dark:hover:bg-primary-600 dark:selected:bg-primary-600 disabled:dark:text-neutral-500"
+                                className="m-0.5 grid h-8 w-8 place-items-center rounded-sm text-sm font-medium hover:bg-primary-100 selected:bg-primary-200 disabled:text-neutral-400 dark:text-white dark:hover:bg-primary-600 dark:selected:bg-primary-600 disabled:dark:text-neutral-500"
                               />
                             )}
                           </CalendarGridBody>

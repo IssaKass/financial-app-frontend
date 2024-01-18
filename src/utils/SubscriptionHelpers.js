@@ -8,7 +8,10 @@ export const getTotalSubscriptionsPrice = (subscriptions) => {
   return subscriptions.map((subscription) => Number(subscription.price)).sum();
 };
 
-export const getSubscriptionsPriceByActivness = (subscriptions, activeness) => {
+export const getSubscriptionsPriceByActiveness = (
+  subscriptions,
+  activeness,
+) => {
   return getTotalSubscriptionsPrice(
     subscriptions.filter((subscription) => subscription.active === activeness),
   );

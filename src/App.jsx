@@ -1,14 +1,14 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProjectsPage from "./pages/ProjectsPage";
-import SubscriptionsPage from "./pages/SubscriptionsPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import LoginPage from "./pages/LoginPage";
-import RegistrationPage from "./pages/RegistrationPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import Page from "./pages/Page";
+import ProjectsPage from "./pages/ProjectsPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import SubscriptionsPage from "./pages/SubscriptionsPage";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Column, ColumnResizer, Group } from "react-aria-components";
-import ArrowUpIcon from "@heroicons/react/20/solid/ArrowUpIcon";
+import { PiArrowUpBold } from "react-icons/pi";
 
 const TableColumn = (props) => {
   return (
@@ -22,7 +22,7 @@ const TableColumn = (props) => {
                   sortDirection === "descending" ? "rotate-180" : ""
                 }`}
               >
-                {sortDirection && <ArrowUpIcon className="h-8 w-8" />}
+                {sortDirection && <PiArrowUpBold className="h-4 w-4" />}
               </span>
             )}
           </Group>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   FieldError,
@@ -8,10 +7,10 @@ import {
   Label,
   TextField,
 } from "react-aria-components";
+import { PiEyeBold, PiEyeSlashBold } from "react-icons/pi";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../features/auth/authActions";
-import EyeIcon from "@heroicons/react/20/solid/EyeIcon";
-import EyeSlashIcon from "@heroicons/react/20/solid/EyeSlashIcon";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,13 +78,13 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
               />
               <Button
-                className="absolute right-1 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full"
+                className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full"
                 onPress={toggleShowPassword}
               >
                 {showPassword ? (
-                  <EyeIcon className="h-4 w-4 fill-neutral-500" />
+                  <PiEyeBold className="h-5 w-5 fill-neutral-500" />
                 ) : (
-                  <EyeSlashIcon className="h-4 w-4 fill-neutral-500" />
+                  <PiEyeSlashBold className="h-5 w-5 fill-neutral-500" />
                 )}
               </Button>
             </div>

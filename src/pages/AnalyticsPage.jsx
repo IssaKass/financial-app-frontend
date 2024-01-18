@@ -1,18 +1,18 @@
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React, { useEffect } from "react";
-import DashboardLayout from "../layouts/DashboardLayout";
-import { useSelector, useDispatch } from "react-redux";
+import { Pie } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import colors from "tailwindcss/colors";
+import { useTheme } from "../contexts/ThemeContext";
 import { fetchProjects } from "../features/project/projectActions";
+import DashboardLayout from "../layouts/DashboardLayout";
 import { getProjectsCountByStatus } from "../utils/ProjectHelpers";
 import { PROJECT_STATUS } from "../utils/constants";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
-import colors from "tailwindcss/colors";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const AnalyticsPage = () => {
-  const [isDarkMode, setIsDarkMode] = useLocalStorage("darkMode", false);
+  const { isDarkMode } = useTheme();
   const { data: projects } = useSelector((state) => state.projects);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();

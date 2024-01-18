@@ -1,35 +1,36 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  Heading,
+  Menu,
+  MenuItem,
+  MenuTrigger,
+  Modal,
+  Popover,
+  ResizableTableContainer,
+  Table,
+  TableBody,
+  TableHeader,
+} from "react-aria-components";
+import {
+  PiCaretDownBold,
+  PiPencilSimpleBold,
+  PiTrashBold,
+} from "react-icons/pi";
+import { useDispatch, useSelector } from "react-redux";
+import {
   addProject,
   deleteProject,
   fetchProjects,
   updateProject,
 } from "../../features/project/projectActions";
-import { useDispatch, useSelector } from "react-redux";
 import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
-import axios from "axios";
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Heading,
-  Modal,
-  Menu,
-  MenuItem,
-  MenuTrigger,
-  Popover,
-  ResizableTableContainer,
-  Table,
-  TableHeader,
-  TableBody,
-} from "react-aria-components";
-import PencilIcon from "@heroicons/react/20/solid/PencilIcon";
-import TrashIcon from "@heroicons/react/20/solid/TrashIcon";
-import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
+import { formatCurrency, formatDate, formatSeconds } from "../../utils/format";
+import TableCell from "../Table/TableCell";
 import TableColumn from "../Table/TableColumn";
 import TableRow from "../Table/TableRow";
-import TableCell from "../Table/TableCell";
-import { formatCurrency, formatDate, formatSeconds } from "../../utils/format";
 import ProjectForm from "./ProjectForm";
 
 const ProjectTable = () => {
@@ -259,7 +260,7 @@ const ProjectTable = () => {
                   <div className="flex items-center gap-2">
                     <DialogTrigger>
                       <Button className="circle-center h-8 w-8 hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                        <PencilIcon className="h-4 w-4" />
+                        <PiPencilSimpleBold className="h-4 w-4" />
                       </Button>
 
                       <ProjectForm
@@ -270,7 +271,7 @@ const ProjectTable = () => {
                     </DialogTrigger>
                     <DialogTrigger>
                       <Button className="circle-center h-8 w-8 hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                        <TrashIcon className="h-4 w-4" />
+                        <PiTrashBold className="h-4 w-4" />
                       </Button>
                       <Modal className="fixed left-0 top-0 z-50 grid h-full w-full place-items-center bg-black/50 px-4">
                         <Dialog className="w-full max-w-[40rem] space-y-4 rounded-md bg-white px-4 pb-2 pt-6 text-black dark:bg-neutral-800 dark:text-white">
@@ -355,7 +356,7 @@ const ProjectTable = () => {
             aria-label="Menu"
             className="flex items-center gap-2 rounded border border-primary-600 px-2 py-1 text-sm dark:text-white"
           >
-            Export as <ChevronDownIcon className="h-4 w-4" />
+            Export as <PiCaretDownBold className="h-3 w-3" />
           </Button>
           <Popover className="w-[--trigger-width] rounded border bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">
             <Menu onAction={alert} className="space-y-2 text-sm">

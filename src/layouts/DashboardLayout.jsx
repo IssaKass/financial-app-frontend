@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {
+  FaArrowRightFromBracket,
+  FaBriefcase,
+  FaCalendar,
+  FaChartPie,
+} from "react-icons/fa6";
+import {
+  PiArrowsInBold,
+  PiArrowsOutBold,
+  PiListBold,
+  PiMoonBold,
+  PiSunBold,
+} from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserDetailsQuery } from "../services/auth/authService";
+import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 import { logout, setCredentials } from "../features/auth/authSlice";
-import Bars3Icon from "@heroicons/react/20/solid/Bars3Icon";
-import ArrowsPointingInIcon from "@heroicons/react/20/solid/ArrowsPointingInIcon";
-import ArrowsPointingOutIcon from "@heroicons/react/20/solid/ArrowsPointingOutIcon";
-import MoonIcon from "@heroicons/react/20/solid/MoonIcon";
-import SunIcon from "@heroicons/react/20/solid/SunIcon";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useGetUserDetailsQuery } from "../services/auth/authService";
 
 const DashboardLayout = ({ children }) => {
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorage(
+    "isSidebarOpen",
+    true,
+  );
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useLocalStorage("darkMode", false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-  }, [isDarkMode]);
 
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
     pollingInterval: 900000,
@@ -35,7 +43,7 @@ const DashboardLayout = ({ children }) => {
 
   const handleToggleSidebar = () => setIsSidebarOpen((isOpen) => !isOpen);
 
-  const handleTogglFullScreen = () => {
+  const handleToggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement
         .requestFullscreen()
@@ -45,55 +53,65 @@ const DashboardLayout = ({ children }) => {
     }
   };
 
-  const handleToggleDarkMode = () => {
-    setIsDarkMode((prevDarkMode) => !prevDarkMode);
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
     <div className="min-h-screen w-full text-neutral-600 dark:text-neutral-400">
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-48 transition-transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-40 h-screen w-48 transition-all ${
+          isSidebarOpen ? "" : "w-16"
         }`}
       >
         <div className="h-full overflow-y-auto bg-primary-900 px-3 py-4">
-          <ul className="flex h-full flex-col gap-2 font-medium">
+          <ul className="flex h-full flex-col gap-4 overflow-hidden font-medium">
             {[
               {
                 title: "Analytics",
                 to: "/analytics",
+                icon: <FaChartPie />,
               },
               {
                 title: "Projects",
                 to: "/projects",
+                icon: <FaBriefcase />,
               },
               {
                 title: "Subscriptions",
                 to: "/subscriptions",
+                icon: <FaCalendar />,
+              },
+              {
+                title: "Logout",
+                icon: <FaArrowRightFromBracket />,
+                onClick: handleLogout,
               },
             ].map((link, index) => (
-              <li key={index}>
+              <li key={index} className="last:mt-auto">
                 <Link
                   to={link.to}
-                  className={`group flex items-center rounded-md p-2 text-white hover:bg-primary-700 dark:text-white
+                  onClick={link.onClick}
+                  className={`group flex h-10 w-full items-center gap-4 rounded-md px-3 text-white hover:bg-primary-700 dark:text-white
 									${location.pathname === link.to && "bg-primary-700"}`}
                 >
-                  <span className="ms-3">{link.title}</span>
+                  <div>{link.icon}</div>
+                  <span
+                    className={
+                      isSidebarOpen
+                        ? ""
+                        : "invisible absolute left-full rounded bg-neutral-500 px-2 py-1 text-xs opacity-0 transition-all group-hover:visible group-hover:-translate-x-1 group-hover:opacity-100"
+                    }
+                  >
+                    {link.title}
+                  </span>
                 </Link>
               </li>
             ))}
-            <li className="mt-auto">
-              <button
-                className="group flex w-full items-center rounded-md p-2 text-white hover:bg-primary-700 dark:text-white"
-                onClick={() => dispatch(logout())}
-              >
-                <span className="ms-3">Logout</span>
-              </button>
-            </li>
           </ul>
         </div>
       </aside>
-      <div className={isSidebarOpen ? "ml-48" : ""}>
+      <div className={isSidebarOpen ? "ml-48" : "ml-16"}>
         <div className="bg-neutral-100 py-2 dark:bg-neutral-800">
           <div className="container mx-auto flex items-center gap-2 px-4">
             <button
@@ -102,34 +120,34 @@ const DashboardLayout = ({ children }) => {
               className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
             >
               <span className="sr-only">Toggle sidebar</span>
-              <Bars3Icon className="h-5 w-5" />
+              <PiListBold className="h-5 w-5" />
             </button>
             <div className="flex flex-1 items-center justify-end gap-2">
               <button
-                onClick={handleToggleDarkMode}
+                onClick={toggleDarkMode}
                 type="button"
                 className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
               >
                 <span className="sr-only">Toggle color mode</span>
                 {isDarkMode ? (
-                  <SunIcon className="h-5 w-5" />
+                  <PiSunBold className="h-5 w-5" />
                 ) : (
-                  <MoonIcon className="h-5 w-5" />
+                  <PiMoonBold className="h-5 w-5" />
                 )}
               </button>
               <button
-                onClick={handleTogglFullScreen}
+                onClick={handleToggleFullScreen}
                 type="button"
                 className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
               >
                 <span className="sr-only">Toggle Fullscreen</span>
                 {isFullScreen ? (
-                  <ArrowsPointingInIcon className="h-5 w-5" />
+                  <PiArrowsInBold className="h-5 w-5" />
                 ) : (
-                  <ArrowsPointingOutIcon className="h-5 w-5" />
+                  <PiArrowsOutBold className="h-5 w-5" />
                 )}
               </button>
-              <div className="inline-flex items-center rounded-full bg-neutral-500 p-1.5 text-sm font-bold text-white focus:outline-none">
+              <div className="ms-2 inline-flex items-center rounded-full bg-neutral-500 p-1.5 text-sm font-bold text-white focus:outline-none">
                 <span className="grid h-5 w-5 place-items-center">
                   {String(userInfo.username).charAt(0).toUpperCase()}
                 </span>

@@ -1,6 +1,14 @@
 import React from "react";
-import DashboardLayout from "../layouts/DashboardLayout";
+import {
+  PiBriefcaseBold,
+  PiCurrencyCircleDollarBold,
+  PiImageBold,
+  PiTimerBold
+} from "react-icons/pi";
+import { useSelector } from "react-redux";
 import ProjectTable from "../components/Project/ProjectTable";
+import SummaryItem from "../components/Summary/SummaryItem";
+import DashboardLayout from "../layouts/DashboardLayout";
 import {
   getTotalAnimationDuration,
   getTotalBudget,
@@ -8,11 +16,6 @@ import {
   getTotalProjectsCount,
 } from "../utils/ProjectHelpers";
 import { formatCurrency, formatSeconds } from "../utils/format";
-import { useSelector } from "react-redux";
-import SummaryItem from "../components/Summary/SummaryItem";
-import BriefcaseIcon from "@heroicons/react/20/solid/BriefcaseIcon";
-import PhotoIcon from "@heroicons/react/20/solid/PhotoIcon";
-import CurrencyDollarIcon from "@heroicons/react/20/solid/CurrencyDollarIcon";
 
 const ProjectsPage = () => {
   const { data: projects } = useSelector((state) => state.projects);
@@ -24,22 +27,24 @@ const ProjectsPage = () => {
           <SummaryItem
             text="Total Projects"
             value={getTotalProjectsCount(projects)}
-            icon={<BriefcaseIcon className="fill-primary-600" />}
+            icon={<PiBriefcaseBold className="h-10 w-10 fill-primary-600" />}
           />
           <SummaryItem
             text="Total Images"
             value={getTotalImagesCount(projects)}
-            icon={<PhotoIcon className="fill-primary-600" />}
+            icon={<PiImageBold className="h-10 w-10 fill-primary-600" />}
           />
           <SummaryItem
             text="Total Budget"
             value={formatCurrency(getTotalBudget(projects))}
-            icon={<CurrencyDollarIcon className="fill-primary-600" />}
+            icon={
+              <PiCurrencyCircleDollarBold className="h-10 w-10 fill-primary-600" />
+            }
           />
           <SummaryItem
             text="Total Animation"
             value={formatSeconds(getTotalAnimationDuration(projects))}
-            icon={<CurrencyDollarIcon className="fill-primary-600" />}
+            icon={<PiTimerBold className="h-10 w-10 fill-primary-600" />}
           />
         </div>
         <ProjectTable />

@@ -1,41 +1,43 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
+import { parseDate } from "@internationalized/date";
 import {
   Button,
+  CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  DateInput,
+  DateRangePicker,
+  DateSegment,
   Dialog,
+  FieldError,
+  Form,
+  Group,
   Heading,
   Input,
   Label,
-  Modal,
-  TextField,
-  Popover,
-  Form,
-  ModalOverlay,
-  NumberField,
-  DateRangePicker,
-  DateInput,
-  RangeCalendar,
-  CalendarGrid,
-  CalendarCell,
-  Group,
-  DateSegment,
-  CalendarGridHeader,
-  CalendarHeaderCell,
-  CalendarGridBody,
-  FieldError,
-  Select,
-  SelectValue,
   ListBox,
   ListBoxItem,
+  Modal,
+  ModalOverlay,
+  NumberField,
+  Popover,
+  RangeCalendar,
+  Select,
+  SelectValue,
+  TextField,
 } from "react-aria-components";
-import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
-import ChevronLeftIcon from "@heroicons/react/20/solid/ChevronLeftIcon";
-import ChevronRightIcon from "@heroicons/react/20/solid/ChevronRightIcon";
-import CheckIcon from "@heroicons/react/20/solid/CheckIcon";
-import XMarkIcon from "@heroicons/react/20/solid/XMarkIcon";
-import { parseDate } from "@internationalized/date";
+import {
+  PiCaretDownBold,
+  PiCaretLeftBold,
+  PiCaretRightBold,
+  PiCheckBold,
+  PiXBold,
+} from "react-icons/pi";
+import { useSelector } from "react-redux";
+import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
 import { formatDateToYYYYMMDD } from "../../utils/format";
 
 const ProjectForm = ({ action, onAdd, onEdit, data }) => {
@@ -82,7 +84,7 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                 onPress={close}
                 className="absolute right-1 top-1 grid h-8 w-8 place-items-center rounded-full text-black hover:bg-primary-200 dark:text-white dark:hover:bg-primary-600"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <PiXBold className="h-5 w-5" />
               </Button>
               <Heading
                 slot="title"
@@ -225,7 +227,7 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                   </Label>
                   <Button className="input mt-1 flex w-full items-center justify-between">
                     <SelectValue className="truncate placeholder-shown:italic" />
-                    <ChevronDownIcon className="h-4 w-4" />
+                    <PiCaretDownBold className="h-4 w-4" />
                   </Button>
                   <Popover className="w-[--trigger-width] rounded-md border bg-white text-sm text-black ring-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">
                     <ListBox className="grid gap-1 p-1 outline-none">
@@ -241,7 +243,7 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                               <span>{status}</span>
                               <span>
                                 {isSelected && (
-                                  <CheckIcon className="h-4 w-4" />
+                                  <PiCheckBold className="h-4 w-4" />
                                 )}
                               </span>
                             </div>
@@ -279,7 +281,7 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                       )}
                     </DateInput>
                     <Button>
-                      <ChevronDownIcon className="h-4 w-4" />
+                      <PiCaretDownBold className="h-4 w-4" />
                     </Button>
                   </Group>
                   <Popover className="rounded-md border bg-white dark:border-neutral-700 dark:bg-neutral-800">
@@ -292,13 +294,13 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                               slot="previous"
                               className="grid h-8 w-8 place-items-center rounded-full hover:bg-primary-100 dark:hover:bg-primary-600"
                             >
-                              <ChevronLeftIcon className="h-6 w-6" />
+                              <PiCaretLeftBold className="h-4 w-4" />
                             </Button>
                             <Button
                               slot="next"
                               className="grid h-8 w-8 place-items-center rounded-full hover:bg-primary-100 dark:hover:bg-primary-600"
                             >
-                              <ChevronRightIcon className="h-6 w-6" />
+                              <PiCaretRightBold className="h-4 w-4" />
                             </Button>
                           </div>
                         </header>
@@ -314,7 +316,7 @@ const ProjectForm = ({ action, onAdd, onEdit, data }) => {
                             {(date) => (
                               <CalendarCell
                                 date={date}
-                                className="m-0.5 grid h-8 w-8 place-items-center rounded-sm text-sm font-medium hover:bg-primary-100 selected:bg-primary-200 disabled:text-neutral-500 dark:text-white dark:hover:bg-primary-600 dark:selected:bg-primary-600 disabled:dark:text-neutral-500"
+                                className="m-0.5 grid h-8 w-8 place-items-center rounded-sm text-sm font-medium hover:bg-primary-100 selected:bg-primary-200 disabled:text-neutral-400 dark:text-white dark:hover:bg-primary-600 dark:selected:bg-primary-600 disabled:dark:text-neutral-500"
                               />
                             )}
                           </CalendarGridBody>
