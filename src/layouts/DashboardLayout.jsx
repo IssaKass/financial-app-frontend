@@ -60,8 +60,8 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="min-h-screen w-full text-neutral-600 dark:text-neutral-400">
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-48 transition-all ${
-          isSidebarOpen ? "" : "w-16"
+        className={`fixed left-0 top-0 z-40 h-screen transition-all ${
+          isSidebarOpen ? "w-48" : "w-16"
         }`}
       >
         <div className="h-full overflow-y-auto bg-primary-900 px-3 py-4">
