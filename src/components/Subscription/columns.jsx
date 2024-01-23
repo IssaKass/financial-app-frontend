@@ -63,6 +63,7 @@ export const columns = [
       const price = row.getValue("price");
       return <div>{formatCurrency(price)}</div>;
     },
+    sortingFn: "numeric",
   },
   {
     accessorKey: "active",
@@ -90,6 +91,18 @@ export const columns = [
       }
       return <div>{formatDate(row.getValue("start_date"))}</div>;
     },
+    sortingFn: "sortByDate",
+  },
+  {
+    accessorKey: "end_date",
+    header: ({ column }) => <SortButton column={column}>End Date</SortButton>,
+    cell: ({ row }) => {
+      if (!row.getValue("end_date")) {
+        return "-";
+      }
+      return <div>{formatDate(row.getValue("end_date"))}</div>;
+    },
+    sortingFn: "sortByDate",
   },
   {
     id: "actions",

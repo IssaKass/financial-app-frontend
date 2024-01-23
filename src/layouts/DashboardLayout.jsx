@@ -150,7 +150,7 @@ const DashboardLayout = ({ children }) => {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-[100rem] p-4">{children}</div>
+        <div className="mx-auto max-w-[100rem] p-6">{children}</div>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-
 import {
   Table,
   TableBody,
@@ -18,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { sortByDate } from "@/utils/sort";
 import {
   flexRender,
   getCoreRowModel,
@@ -122,13 +122,27 @@ const Subscription = () => {
       sorting,
       columnFilters,
     },
+    sortingFns: {
+      numeric: (rowA, rowB, columnId) => {
+        const numA = parseFloat(rowA.getValue(columnId));
+        const numB = parseFloat(rowB.getValue(columnId));
+
+        return numA > numB ? 1 : numA < numB ? -1 : 0;
+      },
+      sortByDate: (rowA, rowB, columnId) => {
+        const dateA = rowA.getValue(columnId);
+        const dateB = rowB.getValue(columnId);
+
+        return sortByDate(dateA, dateB);
+      },
+    },
     meta: {
       editRow: (data) => {
         handleEditSubscription(data);
       },
       deleteRow: (subscriptionId) => {
         handleDeleteSubscription(subscriptionId);
-      }
+      },
     },
   });
 

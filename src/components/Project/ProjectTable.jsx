@@ -31,8 +31,10 @@ import {
   fetchProjects,
   updateProject,
 } from "../../features/project/projectActions";
-import { ACTION_MODE } from "../../utils/constants";
+import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
 
+import { Input } from "@/components/ui/input";
+import { sortByDate, sortByStatus } from "@/utils/sort";
 import {
   flexRender,
   getCoreRowModel,
@@ -41,7 +43,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Input } from "../ui/input";
 import ProjectForm from "./ProjectForm";
 import { columns } from "./columns";
 
@@ -76,6 +77,32 @@ const ProjectTable = () => {
     state: {
       sorting,
       columnFilters,
+    },
+    sortingFns: {
+      numeric: (rowA, rowB, columnId) => {
+        const numA = parseFloat(rowA.getValue(columnId));
+        const numB = parseFloat(rowB.getValue(columnId));
+
+        return numA > numB ? 1 : numA < numB ? -1 : 0;
+      },
+      sortByStatus: (rowA, rowB, columnId) => {
+        const statusSortOrder = [
+          PROJECT_STATUS.PENDING,
+          PROJECT_STATUS.PROGRESS,
+          PROJECT_STATUS.FINISHED,
+        ];
+
+        const statusA = rowA.getValue(columnId);
+        const statusB = rowB.getValue(columnId);
+
+        return sortByStatus(statusA, statusB, statusSortOrder);
+      },
+      sortByDate: (rowA, rowB, columnId) => {
+        const dateA = rowA.getValue(columnId);
+        const dateB = rowB.getValue(columnId);
+
+        return sortByDate(dateA, dateB);
+      },
     },
     meta: {
       editRow: (data) => {

@@ -45,6 +45,7 @@ export const columns = [
     accessorKey: "name",
     header: ({ column }) => <SortButton column={column}>Name</SortButton>,
     cell: ({ row }) => <div className="font-bold">{row.getValue("name")}</div>,
+    sortingFn: "alphanumeric",
   },
   {
     accessorKey: "client",
@@ -62,6 +63,7 @@ export const columns = [
       const budget = row.getValue("budget");
       return <div>{formatCurrency(budget)}</div>;
     },
+    sortingFn: "numeric",
   },
   {
     accessorKey: "images",
@@ -104,18 +106,7 @@ export const columns = [
         </Badge>
       );
     },
-    sortingFn: (rowA, rowB, columnId) => {
-      const order = [
-        PROJECT_STATUS.PENDING,
-        PROJECT_STATUS.PROGRESS,
-        PROJECT_STATUS.FINISHED,
-      ];
-
-      const statusA = rowA.getValue(columnId);
-      const statusB = rowB.getValue(columnId);
-
-      return order.indexOf(statusA) - order.indexOf(statusB);
-    },
+    sortingFn: "sortByStatus",
   },
   {
     accessorKey: "start_date",
@@ -126,6 +117,7 @@ export const columns = [
       }
       return <div>{formatDate(row.getValue("start_date"))}</div>;
     },
+    sortingFn: "sortByDate",
   },
   {
     accessorKey: "end_date",
@@ -136,6 +128,7 @@ export const columns = [
       }
       return <div>{formatDate(row.getValue("end_date"))}</div>;
     },
+    sortingFn: "sortByDate",
   },
   {
     id: "actions",
