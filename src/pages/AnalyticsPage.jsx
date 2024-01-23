@@ -8,6 +8,7 @@ import { fetchProjects } from "../features/project/projectActions";
 import DashboardLayout from "../layouts/DashboardLayout";
 import { getProjectsCountByStatus } from "../utils/ProjectHelpers";
 import { PROJECT_STATUS } from "../utils/constants";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -31,9 +32,9 @@ const AnalyticsPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="rounded-md bg-neutral-100 p-4 dark:bg-neutral-800">
-        <h3 className="text-lg font-bold">Projects by status</h3>
-        <div className="relative mt-4 h-80 w-full">
+      <Card>
+        <CardHeader>Projects by status</CardHeader>
+        <CardContent>
           <Pie
             width={100}
             height={100}
@@ -81,8 +82,8 @@ const AnalyticsPage = () => {
               },
             }}
           />
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 };

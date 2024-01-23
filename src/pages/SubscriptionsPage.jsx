@@ -1,4 +1,3 @@
-import React from "react";
 import {
   PiCalendarBlankBold,
   PiCurrencyCircleDollarBold,
@@ -20,29 +19,23 @@ const SubscriptionsPage = () => {
   return (
     <DashboardLayout>
       <div className="mx-auto grid gap-4">
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <SummaryItem
             text="Total Subscriptions"
             value={getTotalSubscriptionsCount(subscriptions)}
-            icon={
-              <PiCalendarBlankBold className="h-10 w-10 fill-primary-600" />
-            }
+            icon={<PiCalendarBlankBold />}
           />
           <SummaryItem
             text="Total Price"
             value={formatCurrency(getTotalSubscriptionsPrice(subscriptions))}
-            icon={
-              <PiCurrencyCircleDollarBold className="h-10 w-10 fill-primary-600" />
-            }
+            icon={<PiCurrencyCircleDollarBold />}
           />
           <SummaryItem
             text="Active Subscriptions Price"
             value={formatCurrency(
               getSubscriptionsPriceByActiveness(subscriptions, true),
             )}
-            icon={
-              <PiCurrencyCircleDollarBold className="h-10 w-10 fill-primary-600" />
-            }
+            icon={<PiCurrencyCircleDollarBold />}
           />
         </div>
         <SubscriptionTable />

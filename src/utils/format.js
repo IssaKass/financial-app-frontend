@@ -1,4 +1,4 @@
-export function formatCurrency(amount, currencyCode = "USD") {
+export function formatCurrency(amount = 0, currencyCode = "USD") {
   try {
     const formattedAmount = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -14,7 +14,7 @@ export function formatCurrency(amount, currencyCode = "USD") {
 
 export const formatDate = (date) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
+    dateStyle: "medium",
   }).format(new Date(date));
 
   return formattedDate;
@@ -22,7 +22,7 @@ export const formatDate = (date) => {
 
 export const formatSeconds = (seconds) => {
   if (!seconds || seconds === 0) {
-    return "0s";
+    return "";
   }
 
   if (!isNaN(seconds) && !Number.isInteger(seconds)) {

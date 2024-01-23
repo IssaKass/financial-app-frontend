@@ -1,14 +1,16 @@
-import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const SummaryItem = ({ icon, text, value }) => {
   return (
-    <div className="flex items-center gap-4 rounded-md bg-neutral-100 p-4 dark:bg-neutral-800">
-      <div className="h-12 w-12">{icon}</div>
-      <div>
-        <p className="font-medium tracking-tight dark:text-white">{text}</p>
-        <p className="mt-1 text-3xl font-bold text-primary-600">{value}</p>
+    <Card className="relative">
+      <div className="absolute right-3 top-3 text-2xl text-muted-foreground">
+        {icon}
       </div>
-    </div>
+      <CardContent className="pt-4">
+        <p className="text-sm">{text}</p>
+        <p className="mt-2 text-3xl font-bold">{value}</p>
+      </CardContent>
+    </Card>
   );
 };
 

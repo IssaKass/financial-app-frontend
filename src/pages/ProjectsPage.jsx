@@ -1,9 +1,8 @@
-import React from "react";
 import {
   PiBriefcaseBold,
   PiCurrencyCircleDollarBold,
   PiImageBold,
-  PiTimerBold
+  PiTimerBold,
 } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import ProjectTable from "../components/Project/ProjectTable";
@@ -23,28 +22,26 @@ const ProjectsPage = () => {
   return (
     <DashboardLayout>
       <div className="grid gap-4">
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <SummaryItem
             text="Total Projects"
             value={getTotalProjectsCount(projects)}
-            icon={<PiBriefcaseBold className="h-10 w-10 fill-primary-600" />}
+            icon={<PiBriefcaseBold />}
           />
           <SummaryItem
             text="Total Images"
             value={getTotalImagesCount(projects)}
-            icon={<PiImageBold className="h-10 w-10 fill-primary-600" />}
+            icon={<PiImageBold />}
           />
           <SummaryItem
             text="Total Budget"
             value={formatCurrency(getTotalBudget(projects))}
-            icon={
-              <PiCurrencyCircleDollarBold className="h-10 w-10 fill-primary-600" />
-            }
+            icon={<PiCurrencyCircleDollarBold />}
           />
           <SummaryItem
             text="Total Animation"
             value={formatSeconds(getTotalAnimationDuration(projects))}
-            icon={<PiTimerBold className="h-10 w-10 fill-primary-600" />}
+            icon={<PiTimerBold />}
           />
         </div>
         <ProjectTable />

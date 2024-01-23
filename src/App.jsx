@@ -1,4 +1,4 @@
-import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AnalyticsPage from "./pages/AnalyticsPage";
@@ -12,71 +12,70 @@ import SubscriptionsPage from "./pages/SubscriptionsPage";
 
 function App() {
   return (
-    <div className="">
-      <div className="h-screen bg-white dark:bg-neutral-900">
-        <BrowserRouter>
-          <Routes>
+    <div className="h-screen">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Page title="Financial | Home">
+                <HomePage />
+              </Page>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Page title="Financial | Login">
+                <LoginPage />
+              </Page>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Page title="Financial | Register">
+                <RegistrationPage />
+              </Page>
+            }
+          />
+          <Route element={<ProtectedRoute />}>
             <Route
-              path="/"
+              path="/analytics"
               element={
-                <Page title="Financial | Home">
-                  <HomePage />
+                <Page title="Financial | Analytics">
+                  <AnalyticsPage />
                 </Page>
               }
             />
             <Route
-              path="/login"
+              path="/projects"
               element={
-                <Page title="Financial | Login">
-                  <LoginPage />
+                <Page title="Financial | Projects">
+                  <ProjectsPage />
                 </Page>
               }
             />
             <Route
-              path="/register"
+              path="/subscriptions"
               element={
-                <Page title="Financial | Register">
-                  <RegistrationPage />
+                <Page title="Financial | Subscriptions">
+                  <SubscriptionsPage />
                 </Page>
               }
             />
-            <Route element={<ProtectedRoute />}>
-              <Route
-                path="/analytics"
-                element={
-                  <Page title="Financial | Analytics">
-                    <AnalyticsPage />
-                  </Page>
-                }
-              />
-              <Route
-                path="/projects"
-                element={
-                  <Page title="Financial | Projects">
-                    <ProjectsPage />
-                  </Page>
-                }
-              />
-              <Route
-                path="/subscriptions"
-                element={
-                  <Page title="Financial | Subscriptions">
-                    <SubscriptionsPage />
-                  </Page>
-                }
-              />
-            </Route>
-            <Route
-              path="*"
-              element={
-                <Page title="Financial | 404: This page could not be found.">
-                  <NotFoundPage />
-                </Page>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </div>
+          </Route>
+          <Route
+            path="*"
+            element={
+              <Page title="Financial | 404: This page could not be found.">
+                <NotFoundPage />
+              </Page>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+      <Toaster />
     </div>
   );
 }

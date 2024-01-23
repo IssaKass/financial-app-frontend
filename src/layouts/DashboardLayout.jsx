@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import {
   FaArrowRightFromBracket,
   FaBriefcase,
@@ -35,6 +37,29 @@ const DashboardLayout = ({ children }) => {
     pollingInterval: 900000,
   });
 
+  const links = [
+    {
+      title: "Analytics",
+      to: "/analytics",
+      icon: <FaChartPie />,
+    },
+    {
+      title: "Projects",
+      to: "/projects",
+      icon: <FaBriefcase />,
+    },
+    {
+      title: "Subscriptions",
+      to: "/subscriptions",
+      icon: <FaCalendar />,
+    },
+    {
+      title: "Logout",
+      icon: <FaArrowRightFromBracket />,
+      onClick: () => dispatch(logout()),
+    },
+  ];
+
   useEffect(() => {
     if (data) {
       dispatch(setCredentials(data));
@@ -53,58 +78,25 @@ const DashboardLayout = ({ children }) => {
     }
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
-    <div className="min-h-screen w-full text-neutral-600 dark:text-neutral-400">
+    <div className="min-h-screen w-full">
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen transition-all ${
+        className={`fixed left-0 top-0 z-40 h-screen border-r transition-all ${
           isSidebarOpen ? "w-48" : "w-16"
         }`}
       >
-        <div className="h-full overflow-y-auto bg-primary-900 px-3 py-4">
+        <div className="h-full overflow-y-auto px-3 py-4">
           <ul className="flex h-full flex-col gap-4 overflow-hidden font-medium">
-            {[
-              {
-                title: "Analytics",
-                to: "/analytics",
-                icon: <FaChartPie />,
-              },
-              {
-                title: "Projects",
-                to: "/projects",
-                icon: <FaBriefcase />,
-              },
-              {
-                title: "Subscriptions",
-                to: "/subscriptions",
-                icon: <FaCalendar />,
-              },
-              {
-                title: "Logout",
-                icon: <FaArrowRightFromBracket />,
-                onClick: handleLogout,
-              },
-            ].map((link, index) => (
+            {links.map((link, index) => (
               <li key={index} className="last:mt-auto">
                 <Link
                   to={link.to}
                   onClick={link.onClick}
-                  className={`group flex h-10 w-full items-center gap-4 rounded-md px-3 text-white hover:bg-primary-700 dark:text-white
-									${location.pathname === link.to && "bg-primary-700"}`}
+                  className={`group flex h-10 w-full items-center gap-4 rounded-md px-3
+									${location.pathname === link.to && "bg-primary text-primary-foreground"}`}
                 >
                   <div>{link.icon}</div>
-                  <span
-                    className={
-                      isSidebarOpen
-                        ? ""
-                        : "invisible absolute left-full rounded bg-neutral-500 px-2 py-1 text-xs opacity-0 transition-all group-hover:visible group-hover:-translate-x-1 group-hover:opacity-100"
-                    }
-                  >
-                    {link.title}
-                  </span>
+                  {isSidebarOpen && <span>{link.title}</span>}
                 </Link>
               </li>
             ))}
@@ -112,50 +104,53 @@ const DashboardLayout = ({ children }) => {
         </div>
       </aside>
       <div className={isSidebarOpen ? "ml-48" : "ml-16"}>
-        <div className="bg-neutral-100 py-2 dark:bg-neutral-800">
-          <div className="container mx-auto flex items-center gap-2 px-4">
-            <button
-              onClick={handleToggleSidebar}
+        <div className="border-b py-2">
+          <div className="mx-auto flex max-w-[100rem] items-center gap-2 px-4">
+            <Button
               type="button"
-              className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
+              variant="ghost"
+              size="icon"
+              onClick={handleToggleSidebar}
             >
               <span className="sr-only">Toggle sidebar</span>
-              <PiListBold className="h-5 w-5" />
-            </button>
-            <div className="flex flex-1 items-center justify-end gap-2">
-              <button
-                onClick={toggleDarkMode}
+              <PiListBold className="h-4 w-4" />
+            </Button>
+            <div className="flex flex-1 items-center justify-end">
+              <Button
                 type="button"
-                className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
+                variant="ghost"
+                size="icon"
+                onClick={toggleDarkMode}
               >
                 <span className="sr-only">Toggle color mode</span>
                 {isDarkMode ? (
-                  <PiSunBold className="h-5 w-5" />
+                  <PiSunBold className="h-4 w-4" />
                 ) : (
-                  <PiMoonBold className="h-5 w-5" />
+                  <PiMoonBold className="h-4 w-4" />
                 )}
-              </button>
-              <button
-                onClick={handleToggleFullScreen}
+              </Button>
+              <Button
                 type="button"
-                className="inline-flex items-center rounded-full p-1.5 text-sm text-neutral-500 hover:bg-neutral-200 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700"
+                variant="ghost"
+                size="icon"
+                onClick={handleToggleFullScreen}
               >
                 <span className="sr-only">Toggle Fullscreen</span>
                 {isFullScreen ? (
-                  <PiArrowsInBold className="h-5 w-5" />
+                  <PiArrowsInBold className="h-4 w-4" />
                 ) : (
-                  <PiArrowsOutBold className="h-5 w-5" />
+                  <PiArrowsOutBold className="h-4 w-4" />
                 )}
-              </button>
-              <div className="ms-2 inline-flex items-center rounded-full bg-neutral-500 p-1.5 text-sm font-bold text-white focus:outline-none">
-                <span className="grid h-5 w-5 place-items-center">
+              </Button>
+              <Avatar className="ms-4">
+                <AvatarFallback>
                   {String(userInfo.username).charAt(0).toUpperCase()}
-                </span>
-              </div>
+                </AvatarFallback>
+              </Avatar>
             </div>
           </div>
         </div>
-        <div className="container mx-auto p-4">{children}</div>
+        <div className="mx-auto max-w-[100rem] p-4">{children}</div>
       </div>
     </div>
   );
