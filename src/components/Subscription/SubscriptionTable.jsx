@@ -43,6 +43,7 @@ import {
   updateSubscription,
 } from "../../features/subscription/subscriptionActions";
 import { ACTION_MODE } from "../../utils/constants";
+import { Typography } from "../ui/typography";
 import SubscriptionForm from "./SubscriptionForm";
 import { columns } from "./columns";
 
@@ -148,8 +149,8 @@ const Subscription = () => {
 
   return (
     <Card className="grid gap-4 rounded-md p-4">
-      <div className="flex flex-col items-end gap-2 md:flex-row md:items-center md:justify-between">
-        <div className="w-full md:max-w-[24rem]">
+      <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-2">
+        <div className="max-md:w-full md:max-w-[24rem] md:flex-1">
           <Input
             placeholder="Filter names..."
             value={table.getColumn("name")?.getFilterValue() ?? ""}
@@ -159,7 +160,7 @@ const Subscription = () => {
             className="w-full"
           />
         </div>
-        <div className="flex items-center gap-1">
+        <div className="space-x-1">
           <Button
             type="button"
             size="sm"
@@ -192,7 +193,7 @@ const Subscription = () => {
           </DropdownMenu>
         </div>
       </div>
-      <div className="max-w-full overflow-x-auto">
+      <div className="overflow-x-auto">
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -211,84 +212,6 @@ const Subscription = () => {
                 </TableRow>
               ))}
             </TableHeader>
-            {/* <TableBody>
-          {projects.map((project, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium">{project.name}</TableCell>
-              <TableCell>{project.client}</TableCell>
-              <TableCell>{formatCurrency(project.budget)}</TableCell>
-              <TableCell>{project.images}</TableCell>
-              <TableCell>{formatSeconds(project.animation)}</TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    project.status === PROJECT_STATUS.PENDING
-                      ? "destructive"
-                      : project.status === PROJECT_STATUS.PROGRESS
-                        ? "warning"
-                        : "success"
-                  }
-                >
-                  {project.status}
-                </Badge>
-              </TableCell>
-              <TableCell>{formatDate(project.start_date)}</TableCell>
-              <TableCell>{formatDate(project.end_date)}</TableCell>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size="icon" variant="ghost">
-                        <PiPencilSimpleBold />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent
-                      onPointerDownOutside={(event) => event.preventDefault()}
-                    >
-                      <ProjectForm
-                        action={ACTION_MODE.EDIT}
-                        onEdit={handleEditProject}
-                        data={project}
-                      />
-                    </DialogContent>
-                  </Dialog>
-
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button size="icon" variant="ghost">
-                        <PiTrashBold />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent
-                      onPointerDownOutside={(event) => event.preventDefault()}
-                    >
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you sure you want to delete the project{" "}
-                          <q>{project.name}</q>?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. Deleting the project
-                          will permanently remove it from the system.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => {
-                            handleDeleteProject(project.id);
-                          }}
-                        >
-                          Yes, Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody> */}
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
@@ -316,43 +239,51 @@ const Subscription = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end gap-2 py-4">
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <PiCaretDoubleLeftBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <PiCaretLeftBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <PiCaretRightBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <PiCaretDoubleRightBold />
-          </Button>
+        <div className="mt-4 flex items-center justify-end gap-1">
+          <div className="flex items-center gap-6">
+            <Typography variant="subtitle2" component="p">
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount() || 1}
+            </Typography>
+            <div className="flex items-center gap-1">
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <PiCaretDoubleLeftBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <PiCaretLeftBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                <PiCaretRightBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                <PiCaretDoubleRightBold />
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </Card>

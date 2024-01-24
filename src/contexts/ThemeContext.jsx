@@ -1,21 +1,41 @@
-import React, { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const ThemeContext = createContext();
+const initialState = {
+  theme: "system",
+  setTimeout: () => null,
+};
 
-export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
+const ThemeContext = createContext(initialState);
+
+export const ThemeProvider = ({
+  children,
+  defaultTheme = "system",
+  storageKey = "vite-ui-theme",
+  ...props
+}) => {
+  const [theme, setTheme] = useLocalStorage(storageKey, defaultTheme);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-  }, [isDarkMode]);
+    const root = window.document.documentElement;
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevDarkMode) => !prevDarkMode);
-  };
+    root.classList.remove("light", "dark");
+
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+
+      root.classList.add(systemTheme);
+      return;
+    }
+
+    root.classList.add(theme);
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <ThemeContext.Provider {...props} value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

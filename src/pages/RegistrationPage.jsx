@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Typography } from "@/components/ui/typography";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -98,9 +99,9 @@ const RegistrationPage = () => {
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9">
+        <Typography variant="h2" component="h2" className="mt-10 text-center">
           Create an account
-        </h2>
+        </Typography>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Form {...form}>
@@ -155,14 +156,14 @@ const RegistrationPage = () => {
               )}
               {!loading ? "Register" : "Registering..."}
             </Button>
-          </form>{" "}
+          </form>
         </Form>
-        <p className="mt-10 text-end text-sm text-muted-foreground">
+        <Typography className="mt-10 text-end text-muted-foreground">
           Already have an account?
           <Link to="/login" className="ms-2 font-bold">
             Log in
           </Link>
-        </p>
+        </Typography>
       </div>
     </div>
   );

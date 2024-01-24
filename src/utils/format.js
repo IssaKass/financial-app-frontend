@@ -22,7 +22,7 @@ export const formatDate = (date) => {
 
 export const formatSeconds = (seconds) => {
   if (!seconds || seconds === 0) {
-    return "";
+    return "0s";
   }
 
   if (!isNaN(seconds) && !Number.isInteger(seconds)) {

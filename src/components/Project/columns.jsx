@@ -53,7 +53,7 @@ export const columns = [
     cell: ({ row }) => {
       const client = row.getValue("client");
 
-      return <div>{client || "-"}</div>;
+      return <div>{client}</div>;
     },
   },
   {
@@ -71,7 +71,7 @@ export const columns = [
     cell: ({ row }) => {
       const images = row.getValue("images");
 
-      return <div>{images || "-"}</div>;
+      return <div>{images}</div>;
     },
   },
   {
@@ -79,10 +79,6 @@ export const columns = [
     header: ({ column }) => <SortButton column={column}>Animation</SortButton>,
     cell: ({ row }) => {
       const animation = row.getValue("animation");
-
-      if (!animation) {
-        return "-";
-      }
 
       return <div>{formatSeconds(animation)}</div>;
     },
@@ -92,6 +88,7 @@ export const columns = [
     header: ({ column }) => <SortButton column={column}>Status</SortButton>,
     cell: ({ row }) => {
       const status = row.getValue("status") || PROJECT_STATUS.PENDING;
+
       return (
         <Badge
           variant={
@@ -112,10 +109,9 @@ export const columns = [
     accessorKey: "start_date",
     header: ({ column }) => <SortButton column={column}>Start Date</SortButton>,
     cell: ({ row }) => {
-      if (!row.getValue("start_date")) {
-        return "-";
-      }
-      return <div>{formatDate(row.getValue("start_date"))}</div>;
+      const startDate = row.getValue("start_date");
+
+      return <div>{formatDate(startDate)}</div>;
     },
     sortingFn: "sortByDate",
   },
@@ -123,10 +119,9 @@ export const columns = [
     accessorKey: "end_date",
     header: ({ column }) => <SortButton column={column}>End Date</SortButton>,
     cell: ({ row }) => {
-      if (!row.getValue("end_date")) {
-        return "-";
-      }
-      return <div>{formatDate(row.getValue("end_date"))}</div>;
+      const endDate = row.getValue("end_date");
+
+      return <div>{formatDate(endDate)}</div>;
     },
     sortingFn: "sortByDate",
   },

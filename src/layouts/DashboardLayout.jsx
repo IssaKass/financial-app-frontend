@@ -1,5 +1,11 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import {
   FaArrowRightFromBracket,
@@ -28,7 +34,8 @@ const DashboardLayout = ({ children }) => {
     true,
   );
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useTheme();
+
+  const { setTheme } = useTheme();
 
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -79,21 +86,26 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="flex min-h-screen w-full">
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen border-r transition-all ${
+        className={`h-screen border-r transition-all ${
           isSidebarOpen ? "w-48" : "w-16"
         }`}
       >
-        <div className="h-full overflow-y-auto px-3 py-4">
-          <ul className="flex h-full flex-col gap-4 overflow-hidden font-medium">
+        <div className="h-14 border-b"></div>
+        <div className="h-[calc(100vh-4rem)] overflow-y-auto p-3">
+          <ul className="flex h-full flex-col gap-2 overflow-hidden font-medium">
             {links.map((link, index) => (
               <li key={index} className="last:mt-auto">
                 <Link
                   to={link.to}
                   onClick={link.onClick}
-                  className={`group flex h-10 w-full items-center gap-4 rounded-md px-3
-									${location.pathname === link.to && "bg-primary text-primary-foreground"}`}
+                  className={`flex h-10 w-full items-center gap-3 rounded-md px-3
+									${
+                    location.pathname === link.to
+                      ? "bg-primary text-primary-foreground dark:bg-muted dark:text-white"
+                      : "hover:bg-muted"
+                  }`}
                 >
                   <div>{link.icon}</div>
                   {isSidebarOpen && <span>{link.title}</span>}
@@ -103,9 +115,9 @@ const DashboardLayout = ({ children }) => {
           </ul>
         </div>
       </aside>
-      <div className={isSidebarOpen ? "ml-48" : "ml-16"}>
-        <div className="border-b py-2">
-          <div className="mx-auto flex max-w-[100rem] items-center gap-2 px-4">
+      <div className="flex-1">
+        <div className="flex h-14 items-center border-b">
+          <div className="flex w-full max-w-[100rem] items-center justify-between gap-2 px-4">
             <Button
               type="button"
               variant="ghost"
@@ -115,20 +127,27 @@ const DashboardLayout = ({ children }) => {
               <span className="sr-only">Toggle sidebar</span>
               <PiListBold className="h-4 w-4" />
             </Button>
-            <div className="flex flex-1 items-center justify-end">
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={toggleDarkMode}
-              >
-                <span className="sr-only">Toggle color mode</span>
-                {isDarkMode ? (
-                  <PiSunBold className="h-4 w-4" />
-                ) : (
-                  <PiMoonBold className="h-4 w-4" />
-                )}
-              </Button>
+            <div className="flex flex-1 items-center justify-end gap-0.5">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <PiSunBold className="visible h-4 w-4 dark:invisible" />
+                    <PiMoonBold className="invisible absolute h-4 w-4 dark:visible" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button
                 type="button"
                 variant="ghost"

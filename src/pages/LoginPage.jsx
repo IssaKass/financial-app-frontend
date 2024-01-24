@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Typography } from "@/components/ui/typography";
 import { loginUser } from "@/features/auth/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -83,9 +84,9 @@ const LoginPage = () => {
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold">
+        <Typography variant="h2" component="h2" className="mt-10 text-center">
           Login to your account
-        </h2>
+        </Typography>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Form {...form}>
@@ -124,12 +125,12 @@ const LoginPage = () => {
             </Button>
           </form>
         </Form>
-        <p className="mt-10 text-end text-sm text-muted-foreground">
+        <Typography className="mt-10 text-end text-muted-foreground">
           Don't have an account?
           <Link to="/register" className="ms-2 font-bold">
             Register now
           </Link>
-        </p>
+        </Typography>
       </div>
     </div>
   );

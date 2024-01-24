@@ -1,14 +1,19 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Typography } from "@/components/ui/typography";
 
 const SummaryItem = ({ icon, text, value }) => {
   return (
-    <Card className="relative">
-      <div className="absolute right-3 top-3 text-2xl text-muted-foreground">
-        {icon}
-      </div>
-      <CardContent className="pt-4">
-        <p className="text-sm">{text}</p>
-        <p className="mt-2 text-3xl font-bold">{value}</p>
+    <Card>
+      <CardContent className="relative py-4">
+        <div className="absolute right-3 top-3 text-2xl text-muted-foreground">
+          {icon}
+        </div>
+        <Typography variant="subtitle1" component="h3">
+          {text}
+        </Typography>
+        <Typography variant="h3" component="span" className="mt-1 block">
+          {value}
+        </Typography>
       </CardContent>
     </Card>
   );

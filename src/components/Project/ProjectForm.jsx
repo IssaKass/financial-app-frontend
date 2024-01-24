@@ -75,6 +75,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
   });
 
   const onSubmit = (data) => {
+    console.log(data);
     const modifiedData = {
       name: data.name,
       client: data.client,

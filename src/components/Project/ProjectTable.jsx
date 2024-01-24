@@ -43,6 +43,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Typography } from "../ui/typography";
 import ProjectForm from "./ProjectForm";
 import { columns } from "./columns";
 
@@ -163,9 +164,9 @@ const ProjectTable = () => {
   };
 
   return (
-    <Card className="grid gap-4 rounded-md p-4">
-      <div className="flex flex-col items-end gap-2 md:flex-row md:items-center md:justify-between">
-        <div className="w-full md:max-w-[24rem]">
+    <Card className="grid space-y-4 rounded-md p-4">
+      <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-2">
+        <div className="max-md:w-full md:max-w-[24rem] md:flex-1">
           <Input
             placeholder="Filter names..."
             value={table.getColumn("name")?.getFilterValue() ?? ""}
@@ -248,50 +249,63 @@ const ProjectTable = () => {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    <Typography
+                      variant="subtitle1"
+                      className="text-muted-foreground"
+                    >
+                      No results
+                    </Typography>
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end gap-2 py-4">
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <PiCaretDoubleLeftBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <PiCaretLeftBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <PiCaretRightBold />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            className="h-8 w-8"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <PiCaretDoubleRightBold />
-          </Button>
+        <div className="mt-4 flex items-center justify-end gap-1">
+          <div className="flex items-center gap-6">
+            <Typography variant="subtitle2" component="p">
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount() || 1}
+            </Typography>
+            <div className="flex items-center gap-1">
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <PiCaretDoubleLeftBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <PiCaretLeftBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                <PiCaretRightBold />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                <PiCaretDoubleRightBold />
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </Card>
