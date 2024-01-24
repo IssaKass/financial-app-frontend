@@ -117,7 +117,7 @@ const DashboardLayout = ({ children }) => {
       </aside>
       <div className="flex-1">
         <div className="flex h-14 items-center border-b">
-          <div className="flex w-full max-w-[100rem] items-center justify-between gap-2 px-4">
+          <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between gap-2 px-4">
             <Button
               type="button"
               variant="ghost"

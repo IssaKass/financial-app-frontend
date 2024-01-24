@@ -53,7 +53,13 @@ export const columns = [
     cell: ({ row }) => {
       const website = row.getValue("website");
 
-      return <div>{website || "-"}</div>;
+      return (
+        <Button variant="link">
+          <a href={website} target="_blank">
+            {website}
+          </a>
+        </Button>
+      );
     },
   },
   {
