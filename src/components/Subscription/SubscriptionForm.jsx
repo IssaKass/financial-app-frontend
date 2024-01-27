@@ -98,7 +98,7 @@ const SubscriptionForm = ({
     >
       <DialogHeader>
         <DialogTitle>
-          {isEdit ? "Edit Subscription" : "Edit Subscription"}
+          {isEdit ? "Edit Subscription" : "Create Subscription"}
         </DialogTitle>
       </DialogHeader>
       <Form {...form}>
@@ -180,7 +180,7 @@ const SubscriptionForm = ({
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          <CalendarIcon size={16} />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>

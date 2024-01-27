@@ -1,41 +1,71 @@
+import {
+  FINANCIAL_UI_COLOR_MODE_KEY,
+  FINANCIAL_UI_THEME_KEY,
+} from "@/utils/keys";
 import { createContext, useContext, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
+export const COLOR_MODES = {
+  LIGHT: "light",
+  DARK: "dark",
+  SYSTEM: "system",
+};
+
+export const THEMES = {
+  DEFAULT: "default",
+  SOFT_BLUE: "soft-blue",
+};
+
 const initialState = {
-  theme: "system",
-  setTimeout: () => null,
+  colorMode: COLOR_MODES.LIGHT,
+  theme: THEMES.DEFAULT,
 };
 
 const ThemeContext = createContext(initialState);
 
 export const ThemeProvider = ({
   children,
-  defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  defaultColorMode = COLOR_MODES.LIGHT,
+  defaultTheme = THEMES.DEFAULT,
   ...props
 }) => {
-  const [theme, setTheme] = useLocalStorage(storageKey, defaultTheme);
+  const [colorMode, setColorMode] = useLocalStorage(
+    FINANCIAL_UI_COLOR_MODE_KEY,
+    defaultColorMode,
+  );
+  const [theme, setTheme] = useLocalStorage(
+    FINANCIAL_UI_THEME_KEY,
+    defaultTheme,
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    if (colorMode === "system") {
+      const systemColorMode = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
 
-      root.classList.add(systemTheme);
+      root.classList.add(systemColorMode);
       return;
     }
 
-    root.classList.add(theme);
+    root.classList.add(colorMode);
+  }, [colorMode]);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.dataset.theme = theme;
   }, [theme]);
 
   return (
-    <ThemeContext.Provider {...props} value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      {...props}
+      value={{ colorMode, setColorMode, theme, setTheme }}
+    >
       {children}
     </ThemeContext.Provider>
   );

@@ -241,7 +241,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          <CalendarIcon size={16} />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>

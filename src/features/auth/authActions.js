@@ -1,5 +1,6 @@
-import axios from "axios";
+import { FINANCIAL_USER_TOKEN_KEY } from "@/utils/keys";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -38,7 +39,7 @@ export const loginUser = createAsyncThunk(
         },
       );
 
-      localStorage.setItem("userToken", data.userToken);
+      localStorage.setItem(FINANCIAL_USER_TOKEN_KEY, data.userToken);
       return data;
     } catch (error) {
       if (error.response && error.response.data.error) {

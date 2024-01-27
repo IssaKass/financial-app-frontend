@@ -7,13 +7,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Loader } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Typography } from "@/components/ui/typography";
+import Page from "@/layouts/Page";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { PiSpinnerBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
@@ -60,15 +62,11 @@ const RegistrationPage = () => {
     mode: "onChange",
   });
 
-  const [showPassword, setShowPassword] = useState(false);
   const { loading, userToken, errors, success } = useSelector(
     (state) => state.auth,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const toggleShowPassword = () =>
-    setShowPassword((showPassword) => !showPassword);
 
   useEffect(() => {
     if (success) {
@@ -97,75 +95,75 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <Typography variant="h2" component="h2" className="mt-10 text-center">
-          Create an account
-        </Typography>
+    <Page title="Financial | Register">
+      <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <Typography variant="h3" component="h1" className="mt-10 text-center">
+            Create an account
+          </Typography>
+        </div>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input {...field} autoFocus />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput {...field} />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                size="sm"
+                className="w-full"
+                disabled={loading}
+              >
+                {loading && <Loader className="me-2 animate-spin" size={16} />}
+                {!loading ? "Register" : "Registering..."}
+              </Button>
+            </form>
+          </Form>
+          <Typography className="mt-10 text-end text-muted-foreground">
+            Already have an account?
+            <Link to="/login" className="ms-2 font-bold">
+              Log in
+            </Link>
+          </Typography>
+        </div>
       </div>
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input {...field} autoFocus />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <PasswordInput {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              size="sm"
-              className="w-full"
-              disabled={loading}
-            >
-              {loading && (
-                <PiSpinnerBold className="me-2 h-4 w-4 animate-spin" />
-              )}
-              {!loading ? "Register" : "Registering..."}
-            </Button>
-          </form>
-        </Form>
-        <Typography className="mt-10 text-end text-muted-foreground">
-          Already have an account?
-          <Link to="/login" className="ms-2 font-bold">
-            Log in
-          </Link>
-        </Typography>
-      </div>
-    </div>
+    </Page>
   );
 };
 

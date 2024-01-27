@@ -13,23 +13,17 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ACTION_MODE } from "@/utils/constants";
 import { formatCurrency, formatDate } from "@/utils/format";
 import { useState } from "react";
-import {
-  PiArrowDownBold,
-  PiCheckBold,
-  PiPencilSimpleBold,
-  PiTrashBold,
-  PiXBold,
-} from "react-icons/pi";
 import { Button } from "../ui/button";
 import SubscriptionForm from "./SubscriptionForm";
 
+import { ArrowDown, Check, Pencil, Trash2, X } from "lucide-react";
 const SortButton = ({ column, children }) => (
   <Button
     variant="ghost"
     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
   >
     <span className="me-4">{children}</span>
-    <PiArrowDownBold
+    <ArrowDown
       className={`h-4 w-4 transition-transform ${
         column.getIsSorted() === "asc"
           ? "-rotate-180"
@@ -79,11 +73,7 @@ export const columns = [
 
       return (
         <div>
-          {active ? (
-            <PiCheckBold className="h-4 w-4" />
-          ) : (
-            <PiXBold className="h-4 w-4" />
-          )}
+          {active ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
         </div>
       );
     },
@@ -121,8 +111,8 @@ export const columns = [
         <div className="flex items-center gap-2">
           <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="icon" variant="outline">
-                <PiPencilSimpleBold />
+              <Button size="icon" variant="ghost">
+                <Pencil size={16} />
               </Button>
             </DialogTrigger>
             <SubscriptionForm
@@ -134,8 +124,8 @@ export const columns = [
           </Dialog>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button size="icon" variant="outline">
-                <PiTrashBold />
+              <Button size="icon" variant="ghost">
+                <Trash2 size={16} />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent
@@ -155,6 +145,7 @@ export const columns = [
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => meta?.deleteRow(subscription.id)}
+                  variant="destructive"
                 >
                   Yes, Delete
                 </AlertDialogAction>

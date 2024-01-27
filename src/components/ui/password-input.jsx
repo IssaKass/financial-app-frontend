@@ -3,8 +3,8 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { PiEyeBold, PiEyeSlashBold } from "react-icons/pi";
 
 const PasswordInput = React.forwardRef(({ className, ...props }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,9 +31,9 @@ const PasswordInput = React.forwardRef(({ className, ...props }, ref) => {
         disabled={disabled}
       >
         {showPassword && !disabled ? (
-          <PiEyeBold className="h-4 w-4" aria-hidden="true" />
+          <Eye size={16} aria-hidden="true" />
         ) : (
-          <PiEyeSlashBold className="h-4 w-4" aria-hidden="true" />
+          <EyeOff size={16} aria-hidden="true" />
         )}
         <span className="sr-only">
           {showPassword ? "Hide password" : "Show password"}

@@ -66,3 +66,5 @@ export const formatDateToYYYYMMDD = (date) => {
 
   return formattedDate;
 };
+
+export const firstLetterUppercase = (word) => String(word).toUpperCase()[0];

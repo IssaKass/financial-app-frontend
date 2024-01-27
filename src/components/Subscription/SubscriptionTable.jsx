@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
   DropdownMenu,
@@ -26,15 +27,20 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
 import {
-  PiCaretDoubleLeftBold,
-  PiCaretDoubleRightBold,
-  PiCaretDownBold,
-  PiCaretLeftBold,
-  PiCaretRightBold,
-  PiSpinnerBold,
-} from "react-icons/pi";
+  ArrowUpFromLine,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Download,
+  Loader,
+  MoreVertical,
+  Plus,
+  Printer,
+  RefreshCcw,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addSubscription,
@@ -148,145 +154,197 @@ const Subscription = () => {
   });
 
   return (
-    <Card className="grid gap-4 rounded-md p-4">
-      <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-2">
-        <div className="max-md:w-full md:max-w-[24rem] md:flex-1">
-          <Input
-            placeholder="Filter names..."
-            value={table.getColumn("name")?.getFilterValue() ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="w-full"
+    <div className="grid gap-4">
+      <div className="flex justify-end">
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button size="sm" className="gap-3 ">
+              <Plus size={16} />
+              Add Subscription
+            </Button>
+          </DialogTrigger>
+          <SubscriptionForm
+            action={ACTION_MODE.ADD}
+            onAdd={handleAddSubscription}
+            afterSubmit={() => setOpen(false)}
           />
-        </div>
-        <div className="space-x-1">
-          <Button
-            type="button"
-            size="sm"
-            disabled={loading}
-            onClick={handleClick}
-          >
-            {loading && <PiSpinnerBold className="me-2 h-4 w-4 animate-spin" />}
-            <span>{loading ? "Syncing..." : "Refresh"}</span>
-          </Button>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger>
-              <Button size="sm">Add</Button>
-            </DialogTrigger>
-            <SubscriptionForm
-              action={ACTION_MODE.ADD}
-              onAdd={handleAddSubscription}
-            />
-          </Dialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline" size="sm">
-                Export as
-                <PiCaretDownBold className="ms-3 h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>CSV</DropdownMenuItem>
-              <DropdownMenuItem>PDF</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        </Dialog>
       </div>
-      <div className="overflow-x-auto">
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="mt-4 flex items-center justify-end gap-1">
-          <div className="flex items-center gap-6">
-            <Typography variant="subtitle2" component="p">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount() || 1}
-            </Typography>
-            <div className="flex items-center gap-1">
+      <Card className="rounded-md">
+        <Tabs defaultValue="all">
+          <TabsList className="w-full justify-start rounded-b-none">
+            <TabsTrigger
+              value="all"
+              className="px-4"
+              onClick={() => table.getColumn("active")?.setFilterValue("")}
+            >
+              All
+            </TabsTrigger>
+            <TabsTrigger
+              value="active"
+              className="px-4"
+              onClick={() => table.getColumn("active")?.setFilterValue(true)}
+            >
+              Active
+            </TabsTrigger>
+            <TabsTrigger
+              value="inactive"
+              className="px-4"
+              onClick={() => table.getColumn("active")?.setFilterValue(false)}
+            >
+              Inactive
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="account">
+            Make changes to your account here.
+          </TabsContent>
+          <TabsContent value="password">Change your password here.</TabsContent>
+        </Tabs>
+        <CardContent className="mt-4 grid gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="flex-1">
+              <Input
+                placeholder="Filter names..."
+                value={table.getColumn("name")?.getFilterValue() ?? ""}
+                onChange={(event) =>
+                  table.getColumn("name")?.setFilterValue(event.target.value)
+                }
+                className="w-full max-w-96"
+              />
+            </div>
+            <div className="flex items-center gap-2">
               <Button
+                type="button"
                 size="icon"
-                variant="outline"
-                className="h-8 w-8"
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
+                variant="secondary"
+                disabled={loading}
+                onClick={handleClick}
               >
-                <PiCaretDoubleLeftBold />
+                {!loading ? (
+                  <RefreshCcw size={16} />
+                ) : (
+                  <Loader className="animate-spin" size={16} />
+                )}
               </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                <PiCaretLeftBold />
-              </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                <PiCaretRightBold />
-              </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8"
-                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                disabled={!table.getCanNextPage()}
-              >
-                <PiCaretDoubleRightBold />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="ghost" size="icon">
+                    <MoreVertical size={16} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem className="gap-3">
+                    <Printer size={16} />
+                    Print
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="gap-3">
+                    <ArrowUpFromLine size={16} />
+                    Import
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="gap-3">
+                    <Download size={16} />
+                    Export
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
-        </div>
-      </div>
-    </Card>
+          <div className="overflow-x-auto">
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+            <div className="mt-4 flex items-center justify-end gap-1">
+              <div className="flex items-center gap-6">
+                <Typography variant="subtitle2" component="p">
+                  Page {table.getState().pagination.pageIndex + 1} of{" "}
+                  {table.getPageCount() || 1}
+                </Typography>
+                <div className="flex items-center gap-1">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                    onClick={() => table.setPageIndex(0)}
+                    disabled={!table.getCanPreviousPage()}
+                  >
+                    <ChevronLeft size={16} />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                  >
+                    <ChevronsLeft size={16} />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                  >
+                    <ChevronRight size={16} />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                    disabled={!table.getCanNextPage()}
+                  >
+                    <ChevronsRight size={16} />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

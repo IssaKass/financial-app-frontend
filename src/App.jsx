@@ -2,10 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import AppearanceSettingsPage from "./pages/AppearanceSettingsPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import Page from "./pages/Page";
+import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SubscriptionsPage from "./pages/SubscriptionsPage";
@@ -15,64 +16,20 @@ function App() {
     <div className="h-screen">
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Page title="Financial | Home">
-                <HomePage />
-              </Page>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Page title="Financial | Login">
-                <LoginPage />
-              </Page>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <Page title="Financial | Register">
-                <RegistrationPage />
-              </Page>
-            }
-          />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
           <Route element={<ProtectedRoute />}>
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/subscriptions" element={<SubscriptionsPage />} />
+            <Route path="/settings" element={<ProfileSettingsPage />} />
             <Route
-              path="/analytics"
-              element={
-                <Page title="Financial | Analytics">
-                  <AnalyticsPage />
-                </Page>
-              }
-            />
-            <Route
-              path="/projects"
-              element={
-                <Page title="Financial | Projects">
-                  <ProjectsPage />
-                </Page>
-              }
-            />
-            <Route
-              path="/subscriptions"
-              element={
-                <Page title="Financial | Subscriptions">
-                  <SubscriptionsPage />
-                </Page>
-              }
+              path="/settings/appearance"
+              element={<AppearanceSettingsPage />}
             />
           </Route>
-          <Route
-            path="*"
-            element={
-              <Page title="Financial | 404: This page could not be found.">
-                <NotFoundPage />
-              </Page>
-            }
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster />

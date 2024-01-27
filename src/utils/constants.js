@@ -8,18 +8,3 @@ export const ACTION_MODE = {
   ADD: "add",
   EDIT: "edit",
 };
-
-export const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];

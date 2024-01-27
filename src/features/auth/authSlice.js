@@ -1,7 +1,8 @@
+import { FINANCIAL_USER_TOKEN_KEY } from "@/utils/keys";
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser, registerUser } from "./authActions";
 
-const userToken = localStorage.getItem("userToken");
+const userToken = localStorage.getItem(FINANCIAL_USER_TOKEN_KEY);
 
 const initialState = {
   loading: false,
@@ -16,7 +17,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem("userToken");
+      localStorage.removeItem(FINANCIAL_USER_TOKEN_KEY);
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;

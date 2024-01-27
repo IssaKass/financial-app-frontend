@@ -1,21 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { fetchProjects } from "@/features/project/projectActions";
+import Page from "@/layouts/Page";
 import { useEffect } from "react";
-import { Pie } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
-import colors from "tailwindcss/colors";
-import { useTheme } from "../contexts/ThemeContext";
-import { fetchProjects } from "../features/project/projectActions";
+import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
 import DashboardLayout from "../layouts/DashboardLayout";
-import { getProjectsCountByStatus } from "../utils/ProjectHelpers";
-import { PROJECT_STATUS } from "../utils/constants";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 const AnalyticsPage = () => {
-  const { isDarkMode } = useTheme();
-  const { data: projects } = useSelector((state) => state.projects);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -25,74 +17,136 @@ const AnalyticsPage = () => {
     }
   }, [userInfo]);
 
+  // const data = [
+  //   getProjectsCountByStatus(projects, PROJECT_STATUS.PENDING),
+  //   getProjectsCountByStatus(projects, PROJECT_STATUS.PROGRESS),
+  //   getProjectsCountByStatus(projects, PROJECT_STATUS.FINISHED),
+  // ];
+
   const data = [
-    getProjectsCountByStatus(projects, PROJECT_STATUS.PENDING),
-    getProjectsCountByStatus(projects, PROJECT_STATUS.PROGRESS),
-    getProjectsCountByStatus(projects, PROJECT_STATUS.FINISHED),
+    {
+      revenue: 10400,
+      subscription: 240,
+    },
+    {
+      revenue: 14405,
+      subscription: 300,
+    },
+    {
+      revenue: 9400,
+      subscription: 200,
+    },
+    {
+      revenue: 8200,
+      subscription: 278,
+    },
+    {
+      revenue: 7000,
+      subscription: 189,
+    },
+    {
+      revenue: 9600,
+      subscription: 239,
+    },
+    {
+      revenue: 11244,
+      subscription: 278,
+    },
+    {
+      revenue: 26475,
+      subscription: 189,
+    },
   ];
 
   return (
-    <DashboardLayout>
-      <Typography variant="h2" component="h2">
-        Analytics
-      </Typography>
-      <div className="mt-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Projects by status</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Pie
-              width={100}
-              height={100}
-              data={{
-                labels: [
-                  PROJECT_STATUS.PENDING,
-                  PROJECT_STATUS.PROGRESS,
-                  PROJECT_STATUS.FINISHED,
-                ],
-                datasets: [
-                  {
-                    label: "Projects",
-                    data: data,
-                    backgroundColor: [
-                      isDarkMode ? colors.red[300] : colors.red[300],
-                      isDarkMode ? colors.yellow[300] : colors.yellow[300],
-                      isDarkMode ? colors.green[300] : colors.green[300],
-                    ],
-                    hoverBackgroundColor: [
-                      isDarkMode ? colors.red[200] : colors.red[200],
-                      isDarkMode ? colors.yellow[200] : colors.yellow[200],
-                      isDarkMode ? colors.green[200] : colors.green[200],
-                    ],
-                    borderColor: [
-                      isDarkMode ? colors.red[500] : colors.red[500],
-                      isDarkMode ? colors.yellow[500] : colors.yellow[500],
-                      isDarkMode ? colors.green[500] : colors.green[500],
-                    ],
-                    borderWidth: 2,
-                    borderDash: [0],
-                    hoverBorderDash: [4],
-                    offset: 12,
-                    hoverOffset: 24,
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-                maintainAspectRatio: true,
-                aspectRatio: 2,
-                plugins: {
-                  legend: {
-                    position: "bottom",
-                  },
-                },
-              }}
-            />
-          </CardContent>
-        </Card>
-      </div>
-    </DashboardLayout>
+    <Page title="Financial | Analytics">
+      {" "}
+      <DashboardLayout>
+        <Typography variant="h2" component="h2">
+          Analytics
+        </Typography>
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-base font-normal">
+                Total Revenue
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">$15,231.89</div>
+              <p className="text-xs text-muted-foreground">
+                +20.1% from last month
+              </p>
+              <div className="h-[200px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 10,
+                      left: 10,
+                      bottom: 0,
+                    }}
+                  >
+                    <Line
+                      type="monotone"
+                      strokeWidth={2}
+                      dataKey="revenue"
+                      activeDot={{
+                        r: 6,
+                        style: { fill: "var(--theme-primary)", opacity: 0.25 },
+                      }}
+                      style={{
+                        stroke: "var(--theme-primary)",
+                        "--theme-primary": "hsl(var(--primary))",
+                      }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-base font-normal">
+                Total Revenue
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">$15,231.89</div>
+              <p className="text-xs text-muted-foreground">
+                +20.1% from last month
+              </p>
+              <div className="h-[120px]">
+                <ResponsiveContainer
+                  width="100%"
+                  height="100%"
+                  className="mt-6"
+                >
+                  <BarChart
+                    data={data}
+                    margin={{
+                      top: 0,
+                      right: 10,
+                      left: 10,
+                      bottom: 0,
+                    }}
+                  >
+                    <Bar
+                      dataKey="subscription"
+                      fill="var(--theme-primary)"
+                      style={{
+                        "--theme-primary": "hsl(var(--primary))",
+                      }}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </DashboardLayout>
+    </Page>
   );
 };
 

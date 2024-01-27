@@ -11,7 +11,11 @@ const SummaryItem = ({ icon, text, value }) => {
         <Typography variant="subtitle1" component="h3">
           {text}
         </Typography>
-        <Typography variant="h3" component="span" className="mt-1 block">
+        <Typography
+          variant="h3"
+          component="span"
+          className="mt-1 block text-primary"
+        >
           {value}
         </Typography>
       </CardContent>

@@ -11,12 +11,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ACTION_MODE, PROJECT_STATUS } from "@/utils/constants";
 import { formatCurrency, formatDate, formatSeconds } from "@/utils/format";
+import { ArrowDown, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import {
-  PiArrowDownBold,
-  PiPencilSimpleBold,
-  PiTrashBold,
-} from "react-icons/pi";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Dialog, DialogTrigger } from "../ui/dialog";
@@ -28,7 +24,7 @@ const SortButton = ({ column, children }) => (
     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
   >
     <span className="me-4">{children}</span>
-    <PiArrowDownBold
+    <ArrowDown
       className={`h-4 w-4 transition-transform ${
         column.getIsSorted() === "asc"
           ? "-rotate-180"
@@ -98,6 +94,7 @@ export const columns = [
                 ? "warning"
                 : "success"
           }
+          size="sm"
         >
           {status}
         </Badge>
@@ -136,8 +133,8 @@ export const columns = [
         <div className="flex items-center gap-2">
           <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="icon" variant="outline">
-                <PiPencilSimpleBold />
+              <Button size="icon" variant="ghost">
+                <Pencil size={16} />
               </Button>
             </DialogTrigger>
             <ProjectForm
@@ -149,8 +146,8 @@ export const columns = [
           </Dialog>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button size="icon" variant="outline">
-                <PiTrashBold />
+              <Button size="icon" variant="ghost">
+                <Trash2 size={16} />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent
@@ -168,7 +165,10 @@ export const columns = [
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => meta?.deleteRow(project.id)}>
+                <AlertDialogAction
+                  onClick={() => meta?.deleteRow(project.id)}
+                  variant="destructive"
+                >
                   Yes, Delete
                 </AlertDialogAction>
               </AlertDialogFooter>
