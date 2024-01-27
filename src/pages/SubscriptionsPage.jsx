@@ -40,21 +40,21 @@ const SubscriptionsPage = () => {
                 <SummaryItem
                   text="Total Subscriptions"
                   value={getTotalSubscriptionsCount(subscriptions)}
-                  icon={<CalendarCheck />}
+                  icon={<CalendarCheck size={88} />}
                 />
                 <SummaryItem
                   text="Total Price"
                   value={formatCurrency(
                     getTotalSubscriptionsPrice(subscriptions),
                   )}
-                  icon={<DollarSign size={20} />}
+                  icon={<DollarSign size={88} />}
                 />
                 <SummaryItem
                   text="Active Subscriptions Price"
                   value={formatCurrency(
                     getSubscriptionsPriceByActiveness(subscriptions, true),
                   )}
-                  icon={<DollarSign size={20} />}
+                  icon={<DollarSign size={88} />}
                 />
               </div>
             </TabsContent>

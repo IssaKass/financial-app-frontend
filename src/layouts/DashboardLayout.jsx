@@ -192,8 +192,8 @@ const DashboardLayout = ({ children }) => {
         }`}
       >
         <div className="grid h-14 place-items-center border-b"></div>
-        <div className="h-[calc(100vh-4rem)] overflow-y-auto p-2">
-          <ul className="flex h-full flex-col gap-2 overflow-hidden font-medium">
+        <div className="h-[calc(100vh-3.5rem)] overflow-y-auto">
+          <ul className="flex h-full flex-col gap-2 overflow-hidden p-2">
             {links.map((link, index) => (
               <li key={index}>
                 <Link
@@ -203,7 +203,7 @@ const DashboardLayout = ({ children }) => {
                   ${!isSidebarOpen && "justify-center"}
 									${
                     location.pathname === link.to
-                      ? "bg-primary text-primary-foreground dark:bg-muted dark:text-white"
+                      ? "bg-primary text-primary-foreground"
                       : "hover:bg-muted"
                   }`}
                 >
@@ -339,7 +339,7 @@ const DashboardLayout = ({ children }) => {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-[1000rem] p-6">{children}</div>
+        <div className="mx-auto max-w-[100rem] p-6">{children}</div>
         <CommandDialog open={open} onOpenChange={setOpen}>
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>

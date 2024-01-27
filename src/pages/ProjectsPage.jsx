@@ -41,22 +41,22 @@ const ProjectsPage = () => {
                 <SummaryItem
                   text="Total Projects"
                   value={getTotalProjectsCount(projects)}
-                  icon={<FolderDot size={20} />}
+                  icon={<FolderDot size={88} />}
                 />
                 <SummaryItem
                   text="Total Images"
                   value={getTotalImagesCount(projects)}
-                  icon={<Image size={20} />}
+                  icon={<Image size={88} />}
                 />
                 <SummaryItem
                   text="Total Budget"
                   value={formatCurrency(getTotalBudget(projects))}
-                  icon={<DollarSign size={20} />}
+                  icon={<DollarSign size={88} />}
                 />
                 <SummaryItem
                   text="Total Animation"
                   value={formatSeconds(getTotalAnimationDuration(projects))}
-                  icon={<Timer size={20} />}
+                  icon={<Timer size={88} />}
                 />
               </div>
             </TabsContent>

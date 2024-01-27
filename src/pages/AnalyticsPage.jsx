@@ -4,11 +4,12 @@ import { fetchProjects } from "@/features/project/projectActions";
 import Page from "@/layouts/Page";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
+import { Bar, BarChart, ResponsiveContainer } from "recharts";
 import DashboardLayout from "../layouts/DashboardLayout";
 
 const AnalyticsPage = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const { data: projects } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,53 +61,12 @@ const AnalyticsPage = () => {
 
   return (
     <Page title="Financial | Analytics">
-      {" "}
       <DashboardLayout>
         <Typography variant="h2" component="h2">
           Analytics
         </Typography>
-        <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-base font-normal">
-                Total Revenue
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">$15,231.89</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
-              <div className="h-[200px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={data}
-                    margin={{
-                      top: 5,
-                      right: 10,
-                      left: 10,
-                      bottom: 0,
-                    }}
-                  >
-                    <Line
-                      type="monotone"
-                      strokeWidth={2}
-                      dataKey="revenue"
-                      activeDot={{
-                        r: 6,
-                        style: { fill: "var(--theme-primary)", opacity: 0.25 },
-                      }}
-                      style={{
-                        stroke: "var(--theme-primary)",
-                        "--theme-primary": "hsl(var(--primary))",
-                      }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <Card className="col-span-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-base font-normal">
                 Total Revenue
