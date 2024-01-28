@@ -6,6 +6,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Bar, BarChart, ResponsiveContainer } from "recharts";
 import DashboardLayout from "../layouts/DashboardLayout";
+import {
+  getTotalAnimationDuration,
+  getTotalBudget,
+  getTotalImagesCount,
+  getTotalProjectsCount,
+} from "../utils/ProjectHelpers";
+import { formatCurrency, formatSeconds } from "../utils/format";
+
+import SummaryList from "@/components/Summary/SummaryList";
 
 const AnalyticsPage = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -59,6 +68,25 @@ const AnalyticsPage = () => {
     },
   ];
 
+  const summaries = [
+    {
+      text: "Total Projects",
+      value: getTotalProjectsCount(projects),
+    },
+    {
+      text: "Total Images",
+      value: getTotalImagesCount(projects),
+    },
+    {
+      text: "Total Budget",
+      value: formatCurrency(getTotalBudget(projects)),
+    },
+    {
+      text: "Total Animation",
+      value: formatSeconds(getTotalAnimationDuration(projects)),
+    },
+  ];
+
   return (
     <Page title="Financial | Analytics">
       <DashboardLayout>
@@ -66,6 +94,9 @@ const AnalyticsPage = () => {
           Analytics
         </Typography>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="col-span-full">
+            <SummaryList summaries={summaries} />
+          </div>
           <Card className="col-span-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-base font-normal">

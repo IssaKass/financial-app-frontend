@@ -1,10 +1,10 @@
+import SummaryList from "@/components/Summary/SummaryList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import Page from "@/layouts/Page";
 import { CalendarCheck, DollarSign } from "lucide-react";
 import { useSelector } from "react-redux";
 import SubscriptionTable from "../components/Subscription/SubscriptionTable";
-import SummaryItem from "../components/Summary/SummaryItem";
 import DashboardLayout from "../layouts/DashboardLayout";
 import {
   getSubscriptionsPriceByActiveness,
@@ -16,14 +16,35 @@ import { formatCurrency } from "../utils/format";
 const SubscriptionsPage = () => {
   const { data: subscriptions } = useSelector((state) => state.subscriptions);
 
+  const summaries = [
+    {
+      text: "Total Subscriptions",
+      value: getTotalSubscriptionsCount(subscriptions),
+      icon: <CalendarCheck size={88} />,
+    },
+    {
+      text: "Total Price",
+      value: formatCurrency(getTotalSubscriptionsPrice(subscriptions)),
+      icon: <DollarSign size={88} />,
+    },
+    {
+      text: "Active Subscriptions Price",
+      value: formatCurrency(
+        getSubscriptionsPriceByActiveness(subscriptions, true),
+      ),
+      icon: <DollarSign size={88} />,
+    },
+  ];
+
   return (
     <Page title="Financial | Subscriptions">
       <DashboardLayout>
-        <Typography variant="h2" component="h2">
-          Subscriptions
+        <Typography variant="h2" className="mt-4 text-center">
+          AKA STUDIO
         </Typography>
         <div className="mt-6">
-          <Tabs defaultValue="reports">
+          
+          <Tabs defaultValue="reports" className="mt-4">
             <TabsList className="mb-2">
               <TabsTrigger value="reports" className="w-28">
                 Reports
@@ -36,30 +57,10 @@ const SubscriptionsPage = () => {
               <SubscriptionTable />
             </TabsContent>
             <TabsContent value="overview">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <SummaryItem
-                  text="Total Subscriptions"
-                  value={getTotalSubscriptionsCount(subscriptions)}
-                  icon={<CalendarCheck size={88} />}
-                />
-                <SummaryItem
-                  text="Total Price"
-                  value={formatCurrency(
-                    getTotalSubscriptionsPrice(subscriptions),
-                  )}
-                  icon={<DollarSign size={88} />}
-                />
-                <SummaryItem
-                  text="Active Subscriptions Price"
-                  value={formatCurrency(
-                    getSubscriptionsPriceByActiveness(subscriptions, true),
-                  )}
-                  icon={<DollarSign size={88} />}
-                />
-              </div>
+              <SummaryList summaries={summaries} />
             </TabsContent>
           </Tabs>
-        </div>{" "}
+        </div>
       </DashboardLayout>
     </Page>
   );

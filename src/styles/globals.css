@@ -1,5 +1,6 @@
 @import "themes/default.css";
 @import "themes/softblue.css";
+@import "themes/green.css";
 
 @tailwind base;
 @tailwind components;

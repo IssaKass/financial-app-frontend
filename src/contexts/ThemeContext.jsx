@@ -14,6 +14,7 @@ export const COLOR_MODES = {
 export const THEMES = {
   DEFAULT: "default",
   SOFT_BLUE: "soft-blue",
+  GREEN: "green",
 };
 
 const initialState = {

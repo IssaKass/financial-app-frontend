@@ -55,6 +55,8 @@ const DashboardLayout = ({ children }) => {
   );
   const [isFullScreen, setIsFullScreen] = useState(false);
 
+  
+
   const { colorMode, setColorMode } = useTheme();
 
   const { userInfo } = useSelector((state) => state.auth);
@@ -65,8 +67,6 @@ const DashboardLayout = ({ children }) => {
   });
 
   const [open, setOpen] = useState(false);
-
-  const { isMac, isWindows } = useSelector((state) => state.os);
 
   useEffect(() => {
     const down = (e) => {
@@ -187,8 +187,8 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen w-full">
       <aside
-        className={`h-screen border-r transition-all ${
-          isSidebarOpen ? "w-48" : "w-16"
+        className={`h-screen border-r shadow-sm transition-all ${
+          isSidebarOpen ? "w-44" : "w-16"
         }`}
       >
         <div className="grid h-14 place-items-center border-b"></div>
@@ -196,31 +196,30 @@ const DashboardLayout = ({ children }) => {
           <ul className="flex h-full flex-col gap-2 overflow-hidden p-2">
             {links.map((link, index) => (
               <li key={index}>
-                <Link
-                  to={link.to}
-                  onClick={link.onClick}
-                  className={`flex h-9 w-full items-center rounded-md px-3
-                  ${!isSidebarOpen && "justify-center"}
-									${
-                    location.pathname === link.to
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted"
+                <Button
+                  variant={location.pathname === link.to ? "default" : "ghost"}
+                  className={`w-full ${
+                    isSidebarOpen ? "justify-start" : "justify-center"
                   }`}
+                  size="sm"
+                  asChild
                 >
-                  <div>{link.icon}</div>
-                  {isSidebarOpen && (
-                    <Typography className="ms-2.5" variant="subtitle2">
-                      {link.title}
-                    </Typography>
-                  )}
-                </Link>
+                  <Link to={link.to} onClick={link.onClick}>
+                    <div>{link.icon}</div>
+                    {isSidebarOpen && (
+                      <Typography className="ms-2.5" variant="subtitle2">
+                        {link.title}
+                      </Typography>
+                    )}
+                  </Link>
+                </Button>
               </li>
             ))}
           </ul>
         </div>
       </aside>
-      <div className="flex-1">
-        <div className="flex h-14 items-center border-b">
+      <div className="h-screen flex-1 overflow-y-auto">
+        <div className="sticky top-0 z-50 flex h-14 items-center border-b bg-background shadow-sm">
           <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between gap-2 px-4">
             <Button
               type="button"
@@ -236,6 +235,7 @@ const DashboardLayout = ({ children }) => {
                 <Input
                   placeholder="Search..."
                   className="ms-auto h-8 w-48 text-xs max-sm:w-full"
+                  variant="filled"
                   onClick={() => setOpen(true)}
                 />
                 <kbd className="pointer-events-none absolute right-1 top-1/2 inline-flex h-5 -translate-y-1/2 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
@@ -253,24 +253,20 @@ const DashboardLayout = ({ children }) => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
                     onClick={() => setColorMode(COLOR_MODES.LIGHT)}
-                    className="gap-3"
                   >
-                    <Sun size={16} />
+                    <Sun size={16} className="me-2" />
                     Light
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => setColorMode(COLOR_MODES.DARK)}
-                    className="gap-3"
                   >
-                    <Moon size={16} />
+                    <Moon size={16} className="me-2" />
                     Dark
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => setColorMode(COLOR_MODES.SYSTEM)}
-                    className="gap-3"
-                    sName="gap-3"
                   >
-                    <Laptop size={16} />
+                    <Laptop size={16} className="me-2" />
                     System
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -320,18 +316,15 @@ const DashboardLayout = ({ children }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <Link to="/settings">
-                      <DropdownMenuItem className="gap-3">
-                        <Settings size={16} />
+                      <DropdownMenuItem>
+                        <Settings size={16} className="me-2" />
                         Settings
                       </DropdownMenuItem>
                     </Link>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="gap-3"
-                    onClick={() => dispatch(logout())}
-                  >
-                    <LogOut size={16} />
+                  <DropdownMenuItem onClick={() => dispatch(logout())}>
+                    <LogOut size={16} className="me-2" />
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -353,9 +346,8 @@ const DashboardLayout = ({ children }) => {
                       item.onSelect();
                       setOpen(false);
                     }}
-                    className="gap-3"
                   >
-                    {item.icon}
+                    <div className="me-2">{item.icon}</div>
                     <span>{item.children}</span>
                   </CommandItem>
                 ))}

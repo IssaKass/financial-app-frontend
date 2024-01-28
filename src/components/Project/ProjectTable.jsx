@@ -172,12 +172,15 @@ const ProjectTable = () => {
 
   return (
     <div className="grid gap-4">
-      <div className="flex justify-end">
+      <div className="flex items-center justify-between">
+        <Typography variant="h4" component="h2">
+          Projects
+        </Typography>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="gap-3">
-              <Plus size={16} />
-              Add Project
+            <Button size="sm" variant="secondary">
+              <Plus size={16} className="me-2" />
+              New Project
             </Button>
           </DialogTrigger>
           <ProjectForm
@@ -187,9 +190,9 @@ const ProjectTable = () => {
           />
         </Dialog>
       </div>
-      <Card className="rounded-md">
+      <Card className="overflow-hidden rounded-md">
         <Tabs defaultValue="all">
-          <TabsList className="w-full justify-start rounded-b-none">
+          <TabsList className="w-full justify-start rounded-none">
             <TabsTrigger
               value="all"
               className="px-4"
@@ -248,16 +251,16 @@ const ProjectTable = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem className="gap-3">
-                    <Printer size={16} />
+                  <DropdownMenuItem>
+                    <Printer size={16} className="me-2" />
                     Print
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="gap-3">
-                    <ArrowUpFromLine size={16} />
+                  <DropdownMenuItem>
+                    <ArrowUpFromLine size={16} className="me-2" />
                     Import
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="gap-3">
-                    <Download size={16} />
+                  <DropdownMenuItem>
+                    <Download size={16} className="me-2" />
                     Export
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -265,7 +268,7 @@ const ProjectTable = () => {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <div className="rounded-md border">
+            <div className="rounded-md border bg-background">
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -342,7 +345,7 @@ const ProjectTable = () => {
               </div>
             </div>
           </div>
-        </CardContent>{" "}
+        </CardContent>
       </Card>
     </div>
   );

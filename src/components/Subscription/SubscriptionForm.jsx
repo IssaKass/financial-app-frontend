@@ -27,7 +27,6 @@ import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
 import { ACTION_MODE } from "@/utils/constants";
 import * as z from "zod";
 
@@ -163,10 +162,8 @@ const SubscriptionForm = ({
                       <FormControl className="w-full">
                         <Button
                           variant={"outline"}
-                          className={cn(
-                            "justify-between text-left font-normal",
-                            !field.value && "text-muted-foreground",
-                          )}
+                          className={`justify-between text-left font-normal
+                            ${!field.value && "text-muted-foreground"}`}
                         >
                           {field.value?.from ? (
                             field.value.to ? (
@@ -222,7 +219,7 @@ const SubscriptionForm = ({
           <DialogFooter className="mt-4 gap-1 max-sm:grid max-sm:grid-cols-2 sm:col-span-2 sm:flex sm:justify-end md:col-span-2">
             <Button
               type="reset"
-              variant="destructive"
+              variant="secondary"
               size="sm"
               className="min-w-24"
               onClick={form.reset}

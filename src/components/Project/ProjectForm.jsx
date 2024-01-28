@@ -34,7 +34,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 import * as z from "zod";
 
 const ProjectFormSchema = z.object({
@@ -223,11 +222,10 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant={"outline"}
-                          className={cn(
-                            "justify-between text-left font-normal",
-                            !field.value && "text-muted-foreground",
-                          )}
+                          variant="outline"
+                          className={`justify-between text-left font-normal ${
+                            !field.value && "text-muted-foreground"
+                          }`}
                         >
                           {field.value?.from ? (
                             field.value.to ? (
@@ -265,7 +263,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
             <Button
               type="reset"
               onClick={form.reset}
-              variant="destructive"
+              variant="secondary"
               size="sm"
               className="min-w-24"
             >

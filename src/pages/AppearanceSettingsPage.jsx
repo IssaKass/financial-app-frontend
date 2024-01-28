@@ -26,9 +26,9 @@ const ThemeSelector = () => {
 
 const ThemeSelectorItem = ({ theme }) => {
   return (
-    <Label key={theme} for={theme}>
+    <Label key={theme} for={theme} data-theme={theme}>
       <Card className="flex h-[150px] w-[200px] flex-col overflow-hidden border-2">
-        <div className="h-[100px] border-b-2" data-theme={theme}>
+        <div className="h-[100px] border-b-2">
           <div className="flex h-[24px] items-center gap-1 bg-accent px-2">
             <div className="h-[8px] w-[40px] rounded-full bg-primary"></div>
             <div className="h-[8px] w-[40px] rounded-full bg-primary"></div>
@@ -43,7 +43,11 @@ const ThemeSelectorItem = ({ theme }) => {
           </div>
         </div>
         <div className="flex flex-1 items-center gap-2 px-2 ">
-          <RadioGroupItem value={theme} id={theme} />
+          <RadioGroupItem
+            value={theme}
+            id={theme}
+            className="border-2 border-primary"
+          />
           <Typography
             variant="subtitle2"
             component="span"

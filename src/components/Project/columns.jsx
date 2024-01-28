@@ -89,10 +89,10 @@ export const columns = [
         <Badge
           variant={
             status === PROJECT_STATUS.PENDING
-              ? "destructive"
+              ? "outline"
               : status === PROJECT_STATUS.PROGRESS
-                ? "warning"
-                : "success"
+                ? "outline"
+                : "outline"
           }
           size="sm"
         >

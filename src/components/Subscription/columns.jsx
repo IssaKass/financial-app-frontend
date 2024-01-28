@@ -24,7 +24,8 @@ const SortButton = ({ column, children }) => (
   >
     <span className="me-4">{children}</span>
     <ArrowDown
-      className={`h-4 w-4 transition-transform ${
+      size={16}
+      className={`transition-transform ${
         column.getIsSorted() === "asc"
           ? "-rotate-180"
           : column.getIsSorted() === "desc"

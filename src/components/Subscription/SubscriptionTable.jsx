@@ -31,8 +31,6 @@ import {
   ArrowUpFromLine,
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
   Download,
   Loader,
   MoreVertical,
@@ -155,12 +153,15 @@ const Subscription = () => {
 
   return (
     <div className="grid gap-4">
-      <div className="flex justify-end">
+      <div className="flex items-center justify-between">
+        <Typography variant="h4" component="h2">
+          Subscriptions
+        </Typography>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="gap-3 ">
-              <Plus size={16} />
-              Add Subscription
+            <Button variant="secondary" size="sm">
+              <Plus size={16} className="me-2" />
+              New Subscription
             </Button>
           </DialogTrigger>
           <SubscriptionForm
@@ -170,9 +171,9 @@ const Subscription = () => {
           />
         </Dialog>
       </div>
-      <Card className="rounded-md">
+      <Card className="overflow-hidden rounded-md">
         <Tabs defaultValue="all">
-          <TabsList className="w-full justify-start rounded-b-none">
+          <TabsList className="w-full justify-start rounded-none">
             <TabsTrigger
               value="all"
               className="px-4"
@@ -233,16 +234,16 @@ const Subscription = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem className="gap-3">
-                    <Printer size={16} />
+                  <DropdownMenuItem>
+                    <Printer size={16} className="me-2" />
                     Print
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="gap-3">
-                    <ArrowUpFromLine size={16} />
+                  <DropdownMenuItem>
+                    <ArrowUpFromLine className="me-2" size={16} />
                     Import
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="gap-3">
-                    <Download size={16} />
+                  <DropdownMenuItem>
+                    <Download size={16} className="me-2" />
                     Export
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -250,7 +251,7 @@ const Subscription = () => {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <div className="rounded-md border">
+            <div className="rounded-md border bg-background">
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -296,47 +297,27 @@ const Subscription = () => {
               </Table>
             </div>
             <div className="mt-4 flex items-center justify-end gap-1">
-              <div className="flex items-center gap-6">
-                <Typography variant="subtitle2" component="p">
+              <div className="flex items-center gap-4">
+                <Typography variant="body2" component="p">
                   Page {table.getState().pagination.pageIndex + 1} of{" "}
                   {table.getPageCount() || 1}
                 </Typography>
                 <div className="flex items-center gap-1">
                   <Button
                     size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => table.setPageIndex(0)}
+                    variant="ghost"
+                    onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
                     <ChevronLeft size={16} />
                   </Button>
                   <Button
                     size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                  >
-                    <ChevronsLeft size={16} />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
+                    variant="ghost"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
                     <ChevronRight size={16} />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                    disabled={!table.getCanNextPage()}
-                  >
-                    <ChevronsRight size={16} />
                   </Button>
                 </div>
               </div>

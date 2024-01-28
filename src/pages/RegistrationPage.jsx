@@ -155,10 +155,13 @@ const RegistrationPage = () => {
               </Button>
             </form>
           </Form>
-          <Typography className="mt-10 text-end text-muted-foreground">
+          <Typography
+            variant="body2"
+            className="mt-10 text-center text-muted-foreground"
+          >
             Already have an account?
-            <Link to="/login" className="ms-2 font-bold">
-              Log in
+            <Link to="/login" className="ms-2 font-bold hover:underline">
+              Login
             </Link>
           </Typography>
         </div>
