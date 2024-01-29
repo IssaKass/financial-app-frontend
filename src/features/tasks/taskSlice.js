@@ -1,15 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  addProject,
-  deleteProject,
-  fetchProjects,
-  updateProject,
-} from "./projectActions";
+import { addTask, deleteTask, fetchTasks, updateTask } from "./taskActions";
 
-const projectSlice = createSlice({
-  name: "projects",
+
+const taskSlice = createSlice({
+  name: "tasks",
   initialState: {
-  projects: [],
+  tasks: [],
     loading: false,
     error: null,
     success: false,
@@ -21,62 +17,62 @@ const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetch projects
-      .addCase(fetchProjects.pending, (state) => {
+      // fetch tasks
+      .addCase(fetchTasks.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.success = false;
       })
-      .addCase(fetchProjects.fulfilled, (state, { payload }) => {
+      .addCase(fetchTasks.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.projects = payload;
+        state.tasks = payload;
         state.success = true;
       })
-      .addCase(fetchProjects.rejected, (state, { payload }) => {
+      .addCase(fetchTasks.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       })
-      // add project
-      .addCase(addProject.pending, (state) => {
+      // add task
+      .addCase(addTask.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.success = false;
       })
-      .addCase(addProject.fulfilled, (state) => {
+      .addCase(addTask.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
       })
-      .addCase(addProject.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = payload;
-        state.success = false;
-      })
-      // update project
-      .addCase(updateProject.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-        state.success = false;
-      })
-      .addCase(updateProject.fulfilled, (state) => {
-        state.loading = false;
-        state.success = true;
-      })
-      .addCase(updateProject.rejected, (state, { payload }) => {
+      .addCase(addTask.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
         state.success = false;
       })
-      // delete project
-      .addCase(deleteProject.pending, (state) => {
+      // update task
+      .addCase(updateTask.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.success = false;
       })
-      .addCase(deleteProject.fulfilled, (state) => {
+      .addCase(updateTask.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
       })
-      .addCase(deleteProject.rejected, (state, { payload }) => {
+      .addCase(updateTask.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+        state.success = false;
+      })
+      // delete task
+      .addCase(deleteTask.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(deleteTask.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(deleteTask.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
         state.success = false;
@@ -84,5 +80,5 @@ const projectSlice = createSlice({
   },
 });
 
-export const { resetError } = projectSlice.actions;
-export default projectSlice.reducer;
+export const { resetError } = taskSlice.actions;
+export default taskSlice.reducer;

@@ -31,15 +31,19 @@ import { ACTION_MODE } from "@/utils/constants";
 import * as z from "zod";
 
 const SubscriptionFormSchema = z.object({
-  name: z.string().min(1, {
-    message: "Subscription name is required",
-  }),
+  name: z
+    .string()
+    .min(1, {
+      message: "Subscription name is required",
+    })
+    .trim(),
   website: z
     .string()
     .min(1, {
       message: "Subscribed website is required",
     })
-    .url(),
+    .url()
+    .trim(),
   price: z.coerce.number().positive(),
   active: z.boolean().default(false).optional(),
   date: z.object({
@@ -48,13 +52,7 @@ const SubscriptionFormSchema = z.object({
   }),
 });
 
-const SubscriptionForm = ({
-  action,
-  onAdd,
-  onEdit,
-  initialData,
-  afterSubmit,
-}) => {
+const SubscriptionForm = ({ action, onSubmit, initialData }) => {
   const isEdit = action === ACTION_MODE.EDIT;
 
   const form = useForm({
@@ -72,7 +70,7 @@ const SubscriptionForm = ({
     mode: "onChange",
   });
 
-  const onSubmit = (data) => {
+  const handleSubmitForm = (data) => {
     const modifiedData = {
       name: data.name,
       website: data.website,
@@ -86,8 +84,8 @@ const SubscriptionForm = ({
       modifiedData.id = initialData.id;
     }
 
-    isEdit ? onEdit(modifiedData) : onAdd(modifiedData);
-    afterSubmit();
+    form.reset();
+    onSubmit(modifiedData);
   };
 
   return (
@@ -95,17 +93,17 @@ const SubscriptionForm = ({
       className="max-w-[50rem]"
       onPointerDownOutside={(event) => event.preventDefault()}
     >
-      <DialogHeader>
-        <DialogTitle>
-          {isEdit ? "Edit Subscription" : "Create Subscription"}
-        </DialogTitle>
-      </DialogHeader>
       <Form {...form}>
+        <DialogHeader>
+          <DialogTitle>
+            {isEdit ? "Edit Subscription" : "Create Subscription"}
+          </DialogTitle>
+        </DialogHeader>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="mt-8 grid gap-x-4 gap-y-6 sm:grid-cols-2"
+          onSubmit={form.handleSubmit(handleSubmitForm)}
+          className="mt-4 grid gap-6 sm:grid-cols-2"
         >
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="name"
@@ -120,7 +118,7 @@ const SubscriptionForm = ({
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="website"
@@ -135,7 +133,7 @@ const SubscriptionForm = ({
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="price"
@@ -150,7 +148,7 @@ const SubscriptionForm = ({
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="date"
@@ -162,7 +160,7 @@ const SubscriptionForm = ({
                       <FormControl className="w-full">
                         <Button
                           variant={"outline"}
-                          className={`justify-between text-left font-normal
+                          className={`justify-between font-normal
                             ${!field.value && "text-muted-foreground"}`}
                         >
                           {field.value?.from ? (
@@ -197,7 +195,7 @@ const SubscriptionForm = ({
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="active"
@@ -216,7 +214,7 @@ const SubscriptionForm = ({
               )}
             />
           </div>
-          <DialogFooter className="mt-4 gap-1 max-sm:grid max-sm:grid-cols-2 sm:col-span-2 sm:flex sm:justify-end md:col-span-2">
+          <DialogFooter className="col-span-full gap-y-2">
             <Button
               type="reset"
               variant="secondary"

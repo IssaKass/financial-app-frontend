@@ -13,7 +13,7 @@ import {
 } from "../utils/SubscriptionHelpers";
 import { formatCurrency } from "../utils/format";
 
-const SubscriptionsPage = () => {
+const SubscriptionsListPage = () => {
   const { data: subscriptions } = useSelector((state) => state.subscriptions);
 
   const summaries = [
@@ -43,7 +43,6 @@ const SubscriptionsPage = () => {
           AKA STUDIO
         </Typography>
         <div className="mt-6">
-          
           <Tabs defaultValue="reports" className="mt-4">
             <TabsList className="mb-2">
               <TabsTrigger value="reports" className="w-28">
@@ -66,4 +65,4 @@ const SubscriptionsPage = () => {
   );
 };
 
-export default SubscriptionsPage;
+export default SubscriptionsListPage;

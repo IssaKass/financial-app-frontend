@@ -7,7 +7,7 @@ export const fetchSubscriptions = createAsyncThunk(
   "subscriptions/fetchSubscriptions",
   async (userId) => {
     return axios
-      .get(`${apiUrl}/users/${userId}/subscriptions`)
+      .get(`${apiUrl}/api/v1/users/${userId}/subscriptions`)
       .then((response) => response.data)
       .catch((error) => {
         if (error.response && error.response.data.error) {
@@ -25,12 +25,16 @@ export const addSubscription = createAsyncThunk(
     try {
       const token = getState().auth.userToken;
 
-      const response = await axios.post(`${apiUrl}/subscriptions`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await axios.post(
+        `${apiUrl}/api/v1/subscriptions`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       return response.data;
     } catch (error) {
@@ -50,7 +54,7 @@ export const updateSubscription = createAsyncThunk(
       const token = getState().auth.userToken;
 
       const response = await axios.put(
-        `${apiUrl}/subscriptions/${data.id}`,
+        `${apiUrl}/api/v1/subscriptions/${data.id}`,
         data,
         {
           headers: {
@@ -78,7 +82,7 @@ export const deleteSubscription = createAsyncThunk(
       const token = getState().auth.userToken;
 
       const response = await axios.delete(
-        `${apiUrl}/subscriptions/${subscriptionId}`,
+        `${apiUrl}/api/v1/subscriptions/${subscriptionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

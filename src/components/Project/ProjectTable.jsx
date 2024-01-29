@@ -44,6 +44,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Inbox,
   MoreVertical,
   Plus,
   Printer,
@@ -53,17 +54,12 @@ import { Typography } from "../ui/typography";
 import ProjectForm from "./ProjectForm";
 import { columns } from "./columns";
 
+import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 const ProjectTable = () => {
   const dispatch = useDispatch();
-  const {
-    data: projects,
-    loading,
-    success,
-  } = useSelector((state) => state.projects);
+  const { projects, loading, success } = useSelector((state) => state.projects);
   const { userInfo } = useSelector((state) => state.auth);
-
-  const [open, setOpen] = useState(false);
 
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -141,6 +137,10 @@ const ProjectTable = () => {
       await dispatch(addProject(data));
 
       dispatch(fetchProjects(userInfo.id));
+
+      toast({
+        title: "Project added successfully!",
+      });
     } catch (error) {
       console.error("Error adding project:", error);
     }
@@ -153,6 +153,10 @@ const ProjectTable = () => {
       await dispatch(updateProject(data));
 
       dispatch(fetchProjects(userInfo.id));
+
+      toast({
+        title: "Project updated successfully!",
+      });
     } catch (error) {
       console.error("Error updating project:", error);
     }
@@ -164,6 +168,10 @@ const ProjectTable = () => {
 
       if (success) {
         dispatch(fetchProjects(userInfo.id));
+
+        toast({
+          title: "Project deleted successfully!",
+        });
       }
     } catch (error) {
       console.error("Error deleting project:", error);
@@ -176,18 +184,14 @@ const ProjectTable = () => {
         <Typography variant="h4" component="h2">
           Projects
         </Typography>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog>
           <DialogTrigger asChild>
             <Button size="sm" variant="secondary">
               <Plus size={16} className="me-2" />
               New Project
             </Button>
           </DialogTrigger>
-          <ProjectForm
-            action={ACTION_MODE.ADD}
-            onAdd={handleAddProject}
-            afterSubmit={() => setOpen(false)}
-          />
+          <ProjectForm action={ACTION_MODE.ADD} onSubmit={handleAddProject} />
         </Dialog>
       </div>
       <Card className="overflow-hidden rounded-md">
@@ -302,16 +306,13 @@ const ProjectTable = () => {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                      >
-                        <Typography
-                          variant="subtitle1"
-                          className="text-muted-foreground"
-                        >
-                          No results
-                        </Typography>
+                      <TableCell colSpan={columns.length} className="p-0">
+                        <div className="grid h-48 place-content-center place-items-center gap-2 bg-muted text-muted-foreground">
+                          <Inbox size={48} />
+                          <Typography variant="subtitle1">
+                            No Projects
+                          </Typography>
+                        </div>
                       </TableCell>
                     </TableRow>
                   )}

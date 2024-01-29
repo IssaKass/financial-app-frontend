@@ -32,7 +32,8 @@ const RegisterFormSchema = z.object({
     })
     .max(20, {
       message: "Username must be at most 20 characters",
-    }),
+    })
+    .trim(),
   email: z
     .string()
     .min(1, {
@@ -40,7 +41,8 @@ const RegisterFormSchema = z.object({
     })
     .email({
       message: "Invalid email address",
-    }),
+    })
+    .trim(),
   password: z
     .string()
     .min(1, {
@@ -48,7 +50,8 @@ const RegisterFormSchema = z.object({
     })
     .min(8, {
       message: "Password must be at least 8 characters",
-    }),
+    })
+    .trim(),
 });
 
 const RegistrationPage = () => {

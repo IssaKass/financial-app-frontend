@@ -37,12 +37,18 @@ import {
 import * as z from "zod";
 
 const ProjectFormSchema = z.object({
-  name: z.string().min(1, {
-    message: "Project name is required",
-  }),
-  client: z.string().min(1, {
-    message: "Client name is required",
-  }),
+  name: z
+    .string()
+    .min(1, {
+      message: "Project name is required",
+    })
+    .trim(),
+  client: z
+    .string()
+    .min(1, {
+      message: "Client name is required",
+    })
+    .trim(),
   budget: z.coerce.number().positive(),
   images: z.coerce.number().nonnegative(),
   animation: z.coerce.number().nonnegative(),
@@ -53,7 +59,7 @@ const ProjectFormSchema = z.object({
   }),
 });
 
-const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
+const ProjectForm = ({ action, onSubmit, initialData }) => {
   const isEdit = action === ACTION_MODE.EDIT;
 
   const form = useForm({
@@ -73,8 +79,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
     mode: "onChange",
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleSubmitForm = (data) => {
     const modifiedData = {
       name: data.name,
       client: data.client,
@@ -90,8 +95,8 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
       modifiedData.id = initialData.id;
     }
 
-    isEdit ? onEdit(modifiedData) : onAdd(modifiedData);
-    afterSubmit();
+    form.reset();
+    onSubmit(modifiedData);
   };
 
   return (
@@ -99,15 +104,17 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
       className="max-w-[50rem]"
       onPointerDownOutside={(event) => event.preventDefault()}
     >
-      <DialogHeader>
-        <DialogTitle>{isEdit ? "Edit Project" : "Create Project"}</DialogTitle>
-      </DialogHeader>
       <Form {...form}>
+        <DialogHeader>
+          <DialogTitle>
+            {isEdit ? "Edit Project" : "Create Project"}
+          </DialogTitle>
+        </DialogHeader>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="mt-8 grid gap-x-4 gap-y-6 sm:grid-cols-2"
+          onSubmit={form.handleSubmit(handleSubmitForm)}
+          className="mt-4 grid gap-6 sm:grid-cols-2"
         >
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="name"
@@ -122,7 +129,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="client"
@@ -211,7 +218,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
               )}
             />
           </div>
-          <div className="sm:col-span-2">
+          <div className="col-span-full">
             <FormField
               control={form.control}
               name="date"
@@ -223,7 +230,7 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
                       <FormControl>
                         <Button
                           variant="outline"
-                          className={`justify-between text-left font-normal ${
+                          className={`justify-between font-normal ${
                             !field.value && "text-muted-foreground"
                           }`}
                         >
@@ -259,17 +266,17 @@ const ProjectForm = ({ action, onAdd, onEdit, initialData, afterSubmit }) => {
               )}
             />
           </div>
-          <DialogFooter className="mt-4 gap-1 max-sm:grid max-sm:grid-cols-2 sm:col-span-2 sm:flex sm:justify-end md:col-span-2">
+          <DialogFooter className="col-span-full gap-y-2">
             <Button
               type="reset"
               onClick={form.reset}
               variant="secondary"
               size="sm"
-              className="min-w-24"
+              className="min-w-20"
             >
               Reset
             </Button>
-            <Button type="submit" size="sm" className="min-w-24">
+            <Button type="submit" size="sm" className="min-w-20">
               {isEdit ? "Save Changes" : "Add"}
             </Button>
           </DialogFooter>

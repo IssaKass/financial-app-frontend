@@ -1,12 +1,9 @@
 import { Typography } from "@/components/ui/typography";
 import Page from "@/layouts/Page";
-import { useSelector } from "react-redux";
 import ProjectTable from "../components/Project/ProjectTable";
 import DashboardLayout from "../layouts/DashboardLayout";
 
-const ProjectsPage = () => {
-  const { data: projects } = useSelector((state) => state.projects);
-
+const ProjectsListPage = () => {
   return (
     <Page title="Financial | Projects">
       <DashboardLayout>
@@ -21,4 +18,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default ProjectsListPage;

@@ -3,11 +3,11 @@ import axios from "axios";
 
 const apiUrl = `${import.meta.env.VITE_API_URL}`;
 
-export const fetchProjects = createAsyncThunk(
-  "projects/fetchProjects",
+export const fetchTasks = createAsyncThunk(
+  "projects/fetchTasks",
   async (userId) => {
     return axios
-      .get(`${apiUrl}/api/v1/users/${userId}/projects`)
+      .get(`${apiUrl}/api/v1/projects/${userId}/tasks`)
       .then((response) => response.data)
       .catch((error) => {
         if (error.response && error.response.data.error) {
@@ -19,13 +19,13 @@ export const fetchProjects = createAsyncThunk(
   },
 );
 
-export const addProject = createAsyncThunk(
-  "projects/addProject",
+export const addTask = createAsyncThunk(
+  "projects/addTask",
   async (data, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.userToken;
 
-      const response = await axios.post(`${apiUrl}/api/v1/projects`, data, {
+      const response = await axios.post(`${apiUrl}/api/v1/tasks`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -43,14 +43,14 @@ export const addProject = createAsyncThunk(
   },
 );
 
-export const updateProject = createAsyncThunk(
-  "projects/updateProject",
+export const updateTask = createAsyncThunk(
+  "projects/updateTask",
   async (data, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.userToken;
 
       const response = await axios.put(
-        `${apiUrl}/api/v1/projects/${data.id}`,
+        `${apiUrl}/api/v1/tasks/${data.id}`,
         data,
         {
           headers: {
@@ -71,20 +71,17 @@ export const updateProject = createAsyncThunk(
   },
 );
 
-export const deleteProject = createAsyncThunk(
-  "projects/deleteProject",
-  async (projectId, { getState, rejectWithValue }) => {
+export const deleteTask = createAsyncThunk(
+  "projects/deleteTask",
+  async (taskId, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.userToken;
 
-      const response = await axios.delete(
-        `${apiUrl}/api/v1/projects/${projectId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await axios.delete(`${apiUrl}/api/v1/tasks/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       return response.data;
     } catch (error) {

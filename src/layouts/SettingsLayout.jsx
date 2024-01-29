@@ -3,7 +3,7 @@ import { Typography } from "@/components/ui/typography";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { firstLetterUppercase } from "@/utils/format";
 
-import { Brush, User } from "lucide-react";
+import { Brush, UserRound } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const SettingsLayout = ({ children }) => {
     {
       title: "Public Profile",
       to: "/settings",
-      icon: <User size={16} />,
+      icon: <UserRound size={16} />,
     },
     {
       title: "Appearance",

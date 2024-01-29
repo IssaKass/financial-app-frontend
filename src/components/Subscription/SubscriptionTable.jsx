@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "@/components/ui/use-toast";
 import { sortByDate } from "@/utils/sort";
 import {
   flexRender,
@@ -32,6 +32,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Inbox,
   Loader,
   MoreVertical,
   Plus,
@@ -66,8 +67,6 @@ const Subscription = () => {
     }
   };
 
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     if (userInfo && userInfo.id) {
       dispatch(fetchSubscriptions(userInfo.id));
@@ -78,10 +77,13 @@ const Subscription = () => {
     try {
       data = { ...data, user_id: userInfo.id };
 
-      setOpen(false);
       await dispatch(addSubscription(data));
 
       dispatch(fetchSubscriptions(userInfo.id));
+
+      toast({
+        title: "Subscription added successfully",
+      });
     } catch (error) {
       console.error("Error adding subscription:", error);
     }
@@ -94,6 +96,10 @@ const Subscription = () => {
       await dispatch(updateSubscription(data));
 
       dispatch(fetchSubscriptions(userInfo.id));
+
+      toast({
+        title: "Subscription updated successfully",
+      });
     } catch (error) {
       console.error("Error updating subscription:", error);
     }
@@ -105,6 +111,10 @@ const Subscription = () => {
 
       if (success) {
         dispatch(fetchSubscriptions(userInfo.id));
+
+        toast({
+          title: "Subscription deleted successfully!",
+        });
       }
     } catch (error) {
       console.error("Error deleting subscription:", error);
@@ -157,7 +167,7 @@ const Subscription = () => {
         <Typography variant="h4" component="h2">
           Subscriptions
         </Typography>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog>
           <DialogTrigger asChild>
             <Button variant="secondary" size="sm">
               <Plus size={16} className="me-2" />
@@ -166,8 +176,7 @@ const Subscription = () => {
           </DialogTrigger>
           <SubscriptionForm
             action={ACTION_MODE.ADD}
-            onAdd={handleAddSubscription}
-            afterSubmit={() => setOpen(false)}
+            onSubmit={handleAddSubscription}
           />
         </Dialog>
       </div>
@@ -285,11 +294,13 @@ const Subscription = () => {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                      >
-                        No results.
+                      <TableCell colSpan={columns.length} className="p-0">
+                        <div className="grid h-48 place-content-center place-items-center gap-2 bg-muted text-muted-foreground">
+                          <Inbox size={48} />
+                          <Typography variant="subtitle1">
+                            No Subscriptions
+                          </Typography>
+                        </div>
                       </TableCell>
                     </TableRow>
                   )}

@@ -7,9 +7,10 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage";
-import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetailsPage from "./pages/ProjectDetailsPage";
+import ProjectsListPage from "./pages/ProjectsListPage";
 import RegistrationPage from "./pages/RegistrationPage";
-import SubscriptionsPage from "./pages/SubscriptionsPage";
+import SubscriptionsListPage from "./pages/SubscriptionsListPage";
 
 function App() {
   return (
@@ -21,8 +22,12 @@ function App() {
           <Route path="/register" element={<RegistrationPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/subscriptions" element={<SubscriptionsPage />} />
+            <Route path="/projects" element={<ProjectsListPage />} />
+            <Route
+              path="/projects/:projectId"
+              element={<ProjectDetailsPage />}
+            />
+            <Route path="/subscriptions" element={<SubscriptionsListPage />} />
             <Route path="/settings" element={<ProfileSettingsPage />} />
             <Route
               path="/settings/appearance"

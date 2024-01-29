@@ -12,7 +12,6 @@ import {
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ACTION_MODE } from "@/utils/constants";
 import { formatCurrency, formatDate } from "@/utils/format";
-import { useState } from "react";
 import { Button } from "../ui/button";
 import SubscriptionForm from "./SubscriptionForm";
 
@@ -106,11 +105,10 @@ export const columns = [
     cell: ({ table, row }) => {
       const meta = table.options.meta;
       const subscription = row.original;
-      const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
 
       return (
         <div className="flex items-center gap-2">
-          <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
+          <Dialog>
             <DialogTrigger asChild>
               <Button size="icon" variant="ghost">
                 <Pencil size={16} />
@@ -118,8 +116,7 @@ export const columns = [
             </DialogTrigger>
             <SubscriptionForm
               action={ACTION_MODE.EDIT}
-              onEdit={(data) => meta?.editRow(data)}
-              afterSubmit={() => setIsFormDialogOpen(false)}
+              onSubmit={(data) => meta?.editRow(data)}
               initialData={subscription}
             />
           </Dialog>

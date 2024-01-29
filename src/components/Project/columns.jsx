@@ -12,7 +12,7 @@ import {
 import { ACTION_MODE, PROJECT_STATUS } from "@/utils/constants";
 import { formatCurrency, formatDate, formatSeconds } from "@/utils/format";
 import { ArrowDown, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Dialog, DialogTrigger } from "../ui/dialog";
@@ -40,7 +40,20 @@ export const columns = [
   {
     accessorKey: "name",
     header: ({ column }) => <SortButton column={column}>Name</SortButton>,
-    cell: ({ row }) => <div className="font-bold">{row.getValue("name")}</div>,
+    cell: ({ row }) => {
+      const project = row.original;
+      const name = row.getValue("name");
+
+      return (
+        <Link
+          to={`/projects/${project.id}`}
+          state={project}
+          className="font-bold hover:underline hover:underline-offset-2"
+        >
+          {name}
+        </Link>
+      );
+    },
     sortingFn: "alphanumeric",
   },
   {
@@ -86,16 +99,7 @@ export const columns = [
       const status = row.getValue("status") || PROJECT_STATUS.PENDING;
 
       return (
-        <Badge
-          variant={
-            status === PROJECT_STATUS.PENDING
-              ? "outline"
-              : status === PROJECT_STATUS.PROGRESS
-                ? "outline"
-                : "outline"
-          }
-          size="sm"
-        >
+        <Badge variant="outline" size="sm">
           {status}
         </Badge>
       );
@@ -127,11 +131,10 @@ export const columns = [
     cell: ({ table, row }) => {
       const meta = table.options.meta;
       const project = row.original;
-      const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
 
       return (
         <div className="flex items-center gap-2">
-          <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
+          <Dialog>
             <DialogTrigger asChild>
               <Button size="icon" variant="ghost">
                 <Pencil size={16} />
@@ -139,8 +142,7 @@ export const columns = [
             </DialogTrigger>
             <ProjectForm
               action={ACTION_MODE.EDIT}
-              onEdit={(data) => meta?.editRow(data)}
-              afterSubmit={() => setIsFormDialogOpen(false)}
+              onSubmit={(data) => meta?.editRow(data)}
               initialData={project}
             />
           </Dialog>

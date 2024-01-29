@@ -18,7 +18,7 @@ import SummaryList from "@/components/Summary/SummaryList";
 
 const AnalyticsPage = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: projects } = useSelector((state) => state.projects);
+  const {  projects } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   useEffect(() => {

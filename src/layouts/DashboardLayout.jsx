@@ -37,7 +37,7 @@ import {
   PieChart,
   Settings,
   Sun,
-  User,
+  UserRound,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -54,8 +54,6 @@ const DashboardLayout = ({ children }) => {
     true,
   );
   const [isFullScreen, setIsFullScreen] = useState(false);
-
-  
 
   const { colorMode, setColorMode } = useTheme();
 
@@ -129,7 +127,7 @@ const DashboardLayout = ({ children }) => {
         {
           id: "profile",
           children: "Profile",
-          icon: <User />,
+          icon: <UserRound />,
           onSelect: () => navigate("/settings"),
         },
         {
