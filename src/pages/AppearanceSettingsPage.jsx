@@ -6,28 +6,33 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Typography } from "@/components/ui/typography";
 import { THEMES, useTheme } from "@/contexts/ThemeContext";
+import SettingsSection from "@/layouts/SettingsSection";
 
 const ThemeSelector = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <RadioGroup
-      onValueChange={(e) => setTheme(e)}
-      value={theme}
-      defaultValue={theme}
-      className="flex flex-wrap gap-4"
-    >
-      {Object.values(THEMES).map((theme) => (
-        <ThemeSelectorItem theme={theme} />
-      ))}
-    </RadioGroup>
+    <div className="space-y-4">
+      <Typography variant="body2">Make it yours! Customize the app's appearance by choosing the color theme that suits your taste.
+      </Typography>
+      <RadioGroup
+        onValueChange={(e) => setTheme(e)}
+        value={theme}
+        defaultValue={theme}
+        className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-4"
+      >
+        {Object.values(THEMES).map((theme) => (
+          <ThemeSelectorItem theme={theme} />
+        ))}
+      </RadioGroup>
+    </div>
   );
 };
 
 const ThemeSelectorItem = ({ theme }) => {
   return (
-    <Label key={theme} for={theme} data-theme={theme}>
-      <Card className="flex h-[150px] w-[200px] flex-col overflow-hidden border-2">
+    <Label key={theme} htmlFor={theme} data-theme={theme} className="" >
+      <Card className="flex h-[10rem] flex-col overflow-hidden border-2">
         <div className="h-[100px] border-b-2">
           <div className="flex h-[24px] items-center gap-1 bg-accent px-2">
             <div className="h-[8px] w-[40px] rounded-full bg-primary"></div>
@@ -65,9 +70,9 @@ const AppearanceSettingsPage = () => {
   return (
     <Page title="Appearance">
       <SettingsLayout>
-        <div>
+        <SettingsSection title="Theme">
           <ThemeSelector />
-        </div>
+        </SettingsSection>
       </SettingsLayout>
     </Page>
   );

@@ -90,7 +90,7 @@ const AnalyticsPage = () => {
   return (
     <Page title="Financial | Analytics">
       <DashboardLayout>
-        <Typography variant="h2" component="h2">
+        <Typography variant="h4" component="h2">
           Analytics
         </Typography>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

@@ -9,7 +9,7 @@ import {
 const projectSlice = createSlice({
   name: "projects",
   initialState: {
-  projects: [],
+    projects: [],
     loading: false,
     error: null,
     success: false,

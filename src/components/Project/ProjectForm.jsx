@@ -59,7 +59,7 @@ const ProjectFormSchema = z.object({
   }),
 });
 
-const ProjectForm = ({ action, onSubmit, initialData }) => {
+const ProjectForm = ({ action, onSubmit, initialData, afterSubmit }) => {
   const isEdit = action === ACTION_MODE.EDIT;
 
   const form = useForm({
@@ -97,6 +97,7 @@ const ProjectForm = ({ action, onSubmit, initialData }) => {
 
     form.reset();
     onSubmit(modifiedData);
+    afterSubmit();
   };
 
   return (
@@ -277,7 +278,7 @@ const ProjectForm = ({ action, onSubmit, initialData }) => {
               Reset
             </Button>
             <Button type="submit" size="sm" className="min-w-20">
-              {isEdit ? "Save Changes" : "Add"}
+              {isEdit ? "Save" : "Add"}
             </Button>
           </DialogFooter>
         </form>

@@ -125,8 +125,8 @@ const DashboardLayout = ({ children }) => {
       id: "settings",
       items: [
         {
-          id: "profile",
-          children: "Profile",
+          id: "public-profile",
+          children: "Public Profile",
           icon: <UserRound />,
           onSelect: () => navigate("/settings"),
         },
@@ -185,9 +185,8 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen w-full">
       <aside
-        className={`h-screen border-r shadow-sm transition-all ${
-          isSidebarOpen ? "w-44" : "w-16"
-        }`}
+        className={`h-screen border-r shadow-sm transition-all ${isSidebarOpen ? "w-44" : "w-16"
+          }`}
       >
         <div className="grid h-14 place-items-center border-b"></div>
         <div className="h-[calc(100vh-3.5rem)] overflow-y-auto">
@@ -196,9 +195,8 @@ const DashboardLayout = ({ children }) => {
               <li key={index}>
                 <Button
                   variant={location.pathname === link.to ? "default" : "ghost"}
-                  className={`w-full ${
-                    isSidebarOpen ? "justify-start" : "justify-center"
-                  }`}
+                  className={`w-full ${isSidebarOpen ? "justify-start" : "justify-center"
+                    }`}
                   size="sm"
                   asChild
                 >
@@ -218,7 +216,7 @@ const DashboardLayout = ({ children }) => {
       </aside>
       <div className="h-screen flex-1 overflow-y-auto">
         <div className="sticky top-0 z-50 flex h-14 items-center border-b bg-background shadow-sm">
-          <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between gap-2 px-4">
+          <div className="container flex w-full items-center justify-between gap-2">
             <Button
               type="button"
               variant="ghost"
@@ -284,7 +282,6 @@ const DashboardLayout = ({ children }) => {
                   <Maximize className="h-4 w-4" />
                 )}
               </Button>
-
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -330,7 +327,7 @@ const DashboardLayout = ({ children }) => {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-[100rem] p-6">{children}</div>
+        <div className="container py-6">{children}</div>
         <CommandDialog open={open} onOpenChange={setOpen}>
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
