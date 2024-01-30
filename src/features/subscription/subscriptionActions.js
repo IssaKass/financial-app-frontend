@@ -23,7 +23,7 @@ export const addSubscription = createAsyncThunk(
   "subscriptions/addSubscription",
   async (data, { getState, rejectWithValue }) => {
     try {
-      const token = getState().auth.userToken;
+      const token = getState().user.userToken;
 
       const response = await axios.post(
         `${apiUrl}/api/v1/subscriptions`,
@@ -51,7 +51,7 @@ export const updateSubscription = createAsyncThunk(
   "subscriptions/updateSubscription",
   async (data, { getState, rejectWithValue }) => {
     try {
-      const token = getState().auth.userToken;
+      const token = getState().user.userToken;
 
       const response = await axios.put(
         `${apiUrl}/api/v1/subscriptions/${data.id}`,
@@ -79,7 +79,7 @@ export const deleteSubscription = createAsyncThunk(
   "subscriptions/deleteSubscription",
   async (subscriptionId, { getState, rejectWithValue }) => {
     try {
-      const token = getState().auth.userToken;
+      const token = getState().user.userToken;
 
       const response = await axios.delete(
         `${apiUrl}/api/v1/subscriptions/${subscriptionId}`,

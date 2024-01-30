@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Typography } from "@/components/ui/typography";
-import { loginUser } from "@/features/auth/authActions";
+import { loginUser } from "@/features/user/authActions";
 import Page from "@/layouts/Page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
@@ -51,9 +51,7 @@ const LoginPage = () => {
     mode: "onChange",
   });
 
-  const { loading, userInfo, userToken, errors } = useSelector(
-    (state) => state.auth,
-  );
+  const { loading, userToken, errors } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

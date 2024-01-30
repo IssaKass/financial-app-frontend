@@ -23,7 +23,7 @@ export const addTask = createAsyncThunk(
 	"projects/addTask",
 	async (data, { getState, rejectWithValue }) => {
 		try {
-			const token = getState().auth.userToken;
+			const token = getState().user.userToken;
 
 			const response = await axios.post(`${apiUrl}/api/v1/tasks`, data, {
 				headers: {
@@ -47,7 +47,7 @@ export const updateTask = createAsyncThunk(
 	"projects/updateTask",
 	async (data, { getState, rejectWithValue }) => {
 		try {
-			const token = getState().auth.userToken;
+			const token = getState().user.userToken;
 
 			const response = await axios.put(
 				`${apiUrl}/api/v1/tasks/${data.id}`,
@@ -75,7 +75,7 @@ export const deleteTask = createAsyncThunk(
 	"projects/deleteTask",
 	async (taskId, { getState, rejectWithValue }) => {
 		try {
-			const token = getState().auth.userToken;
+			const token = getState().user.userToken;
 
 			const response = await axios.delete(`${apiUrl}/api/v1/tasks/${taskId}`, {
 				headers: {

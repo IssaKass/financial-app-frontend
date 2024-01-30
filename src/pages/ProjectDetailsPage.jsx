@@ -62,7 +62,6 @@ const TaskCard = ({ task, projectId }) => {
       data = { ...data, project_id: projectId };
 
       await dispatch(updateTask(data));
-      setOpen(false);
 
       dispatch(fetchTasks(projectId));
     } catch (error) {
@@ -97,6 +96,7 @@ const TaskCard = ({ task, projectId }) => {
               action={ACTION_MODE.EDIT}
               initialData={task}
               onSubmit={handleEditTask}
+              afterSubmit={() => setOpen(false)}
             />
           </DialogContent>
         </Dialog>
@@ -157,7 +157,7 @@ const ProjectDetailsPage = () => {
 
       await dispatch(addTask(data));
 
-      // dispatch(fetchTasks(project.id));
+      dispatch(fetchTasks(project.id));
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -166,7 +166,7 @@ const ProjectDetailsPage = () => {
   return (
     <Page title="Financial | Project Details">
       <DashboardLayout>
-        <div className="container mx-auto grid gap-4 lg:grid-cols-[1fr_12rem] lg:items-start">
+        <div className="grid gap-4 lg:grid-cols-[1fr_12rem] lg:items-start">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-4">
@@ -228,10 +228,7 @@ const ProjectDetailsPage = () => {
                     <TaskForm
                       action={ACTION_MODE.ADD}
                       onSubmit={handleAddTask}
-                      afterSubmit={() => {
-                        setOpen(false);
-                        dispatch(fetchTasks(project.id));
-                    }}
+                      afterSubmit={() => setOpen(false)}
                     />
                   </DialogContent>
                 </Dialog>

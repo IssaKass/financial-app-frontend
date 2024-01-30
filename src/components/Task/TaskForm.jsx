@@ -64,9 +64,9 @@ const TaskForm = ({ action, onSubmit, initialData, afterSubmit }) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} autoFocus />
+                <Input {...field} autoFocus placeholder="Task title" />
               </FormControl>
-              <FormMessage className="text-xs" placeholder="Task title" />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />

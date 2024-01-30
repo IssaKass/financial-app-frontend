@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
 const HomePage = () => {
-  const { userToken } = useSelector((state) => state.auth);
+  const { userToken } = useSelector((state) => state.user);
 
   const links = [
     {

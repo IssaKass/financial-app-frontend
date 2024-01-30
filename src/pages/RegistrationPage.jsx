@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
-import { registerUser } from "../features/auth/authActions";
+import { registerUser } from "../features/user/authActions";
 
 const RegisterFormSchema = z.object({
   username: z
@@ -66,7 +66,7 @@ const RegistrationPage = () => {
   });
 
   const { loading, userToken, errors, success } = useSelector(
-    (state) => state.auth,
+    (state) => state.user,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();

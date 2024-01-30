@@ -22,7 +22,7 @@ const ThemeSelector = () => {
         className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-4"
       >
         {Object.values(THEMES).map((theme) => (
-          <ThemeSelectorItem theme={theme} />
+          <ThemeSelectorItem key={theme} theme={theme} />
         ))}
       </RadioGroup>
     </div>
@@ -31,7 +31,7 @@ const ThemeSelector = () => {
 
 const ThemeSelectorItem = ({ theme }) => {
   return (
-    <Label key={theme} htmlFor={theme} data-theme={theme} className="" >
+    <Label htmlFor={theme} data-theme={theme} className="" >
       <Card className="flex h-[10rem] flex-col overflow-hidden border-2">
         <div className="h-[100px] border-b-2">
           <div className="flex h-[24px] items-center gap-1 bg-accent px-2">

@@ -17,8 +17,8 @@ import { formatCurrency, formatSeconds } from "../utils/format";
 import SummaryList from "@/components/Summary/SummaryList";
 
 const AnalyticsPage = () => {
-  const { userInfo } = useSelector((state) => state.auth);
-  const {  projects } = useSelector((state) => state.projects);
+  const { userInfo } = useSelector((state) => state.user);
+  const { projects } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   useEffect(() => {

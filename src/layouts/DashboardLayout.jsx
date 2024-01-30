@@ -42,7 +42,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { COLOR_MODES, useTheme } from "../contexts/ThemeContext";
-import { logout, setCredentials } from "../features/auth/authSlice";
+import { logout, setCredentials } from "../features/user/userSlice";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useGetUserDetailsQuery } from "../services/auth/authService";
 
@@ -57,7 +57,7 @@ const DashboardLayout = ({ children }) => {
 
   const { colorMode, setColorMode } = useTheme();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {

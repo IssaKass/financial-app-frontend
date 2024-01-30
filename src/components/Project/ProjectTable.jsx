@@ -59,7 +59,7 @@ import { Loader } from "lucide-react";
 const ProjectTable = () => {
 	const dispatch = useDispatch();
 	const { projects, loading, success } = useSelector((state) => state.projects);
-	const { userInfo } = useSelector((state) => state.auth);
+	const { userInfo } = useSelector((state) => state.user);
 
 	const [sorting, setSorting] = useState([]);
 	const [columnFilters, setColumnFilters] = useState([]);
@@ -288,9 +288,9 @@ const ProjectTable = () => {
 													{header.isPlaceholder
 														? null
 														: flexRender(
-																header.column.columnDef.header,
-																header.getContext()
-														  )}
+															header.column.columnDef.header,
+															header.getContext()
+														)}
 												</TableHead>
 											))}
 										</TableRow>

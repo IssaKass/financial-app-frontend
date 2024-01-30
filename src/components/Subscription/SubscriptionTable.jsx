@@ -59,7 +59,7 @@ const Subscription = () => {
 		loading,
 		success,
 	} = useSelector((state) => state.subscriptions);
-	const { userInfo } = useSelector((state) => state.auth);
+	const { userInfo } = useSelector((state) => state.user);
 
 	const [open, setOpen] = useState(false);
 
@@ -273,9 +273,9 @@ const Subscription = () => {
 													{header.isPlaceholder
 														? null
 														: flexRender(
-																header.column.columnDef.header,
-																header.getContext()
-														  )}
+															header.column.columnDef.header,
+															header.getContext()
+														)}
 												</TableHead>
 											))}
 										</TableRow>

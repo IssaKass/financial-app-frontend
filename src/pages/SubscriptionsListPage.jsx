@@ -14,6 +14,7 @@ import {
 import { formatCurrency } from "../utils/format";
 
 const SubscriptionsListPage = () => {
+  const { userInfo } = useSelector((state) => state.user)
   const { data: subscriptions } = useSelector((state) => state.subscriptions);
 
   const summaries = [
@@ -40,7 +41,7 @@ const SubscriptionsListPage = () => {
     <Page title="Financial | Subscriptions">
       <DashboardLayout>
         <Typography variant="h2" className="mt-4 text-center">
-          AKA STUDIO
+          {userInfo.company}
         </Typography>
         <div className="mt-6">
           <Tabs defaultValue="reports" className="mt-4">

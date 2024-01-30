@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const SettingsLayout = ({ children }) => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.user);
 
   const links = [
     {
@@ -32,8 +32,9 @@ const SettingsLayout = ({ children }) => {
               {firstLetterUppercase(userInfo.username)}
             </AvatarFallback>
           </Avatar>
-          <Typography variant="h3" component="h1">
-            {userInfo.username}
+          <Typography variant="h4" component="h1" className="flex items-center">
+            {userInfo.name || userInfo.username}
+            <span className="text-muted-foreground ms-2 text-[75%]">({userInfo.username})</span>
           </Typography>
         </div>
       </header>
