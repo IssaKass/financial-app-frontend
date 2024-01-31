@@ -3,7 +3,7 @@ import {
   FINANCIAL_UI_THEME_KEY,
 } from "@/utils/keys";
 import { createContext, useContext, useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from "../hooks/use-local-storage";
 
 export const COLOR_MODES = {
   LIGHT: "light",

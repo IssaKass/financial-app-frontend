@@ -5,17 +5,15 @@ import Page from "@/layouts/Page";
 import { CalendarCheck, DollarSign } from "lucide-react";
 import { useSelector } from "react-redux";
 import SubscriptionTable from "../components/Subscription/SubscriptionTable";
+import { selectAllSubscriptions } from "../features/subscriptions/subscriptionsSlice";
 import DashboardLayout from "../layouts/DashboardLayout";
-import {
-  getSubscriptionsPriceByActiveness,
-  getTotalSubscriptionsCount,
-  getTotalSubscriptionsPrice,
-} from "../utils/SubscriptionHelpers";
+import { getSubscriptionsPriceByActiveness, getTotalSubscriptionsCount, getTotalSubscriptionsPrice } from "../utils/SubscriptionHelpers";
 import { formatCurrency } from "../utils/format";
-
 const SubscriptionsListPage = () => {
   const { userInfo } = useSelector((state) => state.user)
-  const { data: subscriptions } = useSelector((state) => state.subscriptions);
+  const subscriptions = useSelector(selectAllSubscriptions);
+
+  console.log(subscriptions);
 
   const summaries = [
     {

@@ -1,70 +1,67 @@
-export function formatCurrency(amount = 0, currencyCode = "USD") {
-  try {
-    const formattedAmount = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currencyCode,
-    }).format(amount);
+import {
+	CURRENCY_FORMATS,
+	DATE_FORMATS,
+	selectCurrencyFormat,
+	selectDateFormat,
+} from "@/features/settings/settingsSlice";
+import { useSelector } from "react-redux";
 
-    return formattedAmount;
-  } catch (error) {
-    console.error("Error formatting currency:", error);
-    return amount; // Return the original amount in case of an error
-  }
-}
+export const formatCurrency = (amount = 0, format) => {
+	if (format) {
+		return new Intl.NumberFormat("en-US", format).format(amount);
+	}
 
-export const formatDate = (date) => {
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-  }).format(new Date(date));
+	const currencyFormat = useSelector(selectCurrencyFormat);
 
-  return formattedDate;
+	return new Intl.NumberFormat(
+		"en-US",
+		CURRENCY_FORMATS[currencyFormat].options
+	).format(amount);
+};
+
+export const formatDate = (date, format) => {
+	const dateInstance = new Date(date);
+
+	if (format) {
+		return new Intl.DateTimeFormat("en-US", format).format(dateInstance);
+	}
+
+	const dateFormat = useSelector(selectDateFormat);
+
+	return new Intl.DateTimeFormat(
+		"en-US",
+		DATE_FORMATS[dateFormat].options
+	).format(dateInstance);
 };
 
 export const formatSeconds = (seconds) => {
-  if (!seconds || seconds === 0) {
-    return "0s";
-  }
+	if (!seconds || seconds === 0) {
+		return "0s";
+	}
 
-  if (!isNaN(seconds) && !Number.isInteger(seconds)) {
-    seconds = Math.round(seconds);
-  }
+	if (!isNaN(seconds) && !Number.isInteger(seconds)) {
+		seconds = Math.round(seconds);
+	}
 
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const remainingSeconds = Math.floor(seconds % 60);
 
-  let formattedTime = "";
+	let formattedTime = "";
 
-  if (hours > 0) {
-    formattedTime += `${hours}h `;
-  }
+	if (hours > 0) {
+		formattedTime += `${hours}h `;
+	}
 
-  if (minutes > 0) {
-    formattedTime += `${minutes}m `;
-  }
+	if (minutes > 0) {
+		formattedTime += `${minutes}m `;
+	}
 
-  if (remainingSeconds > 0) {
-    formattedTime += `${remainingSeconds}s`;
-  }
+	if (remainingSeconds > 0) {
+		formattedTime += `${remainingSeconds}s`;
+	}
 
-  return formattedTime.trim();
-};
-
-export const formatDateToYYYYMMDD = (date) => {
-  // Ensure the input is a valid Date object
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error("Invalid date");
-  }
-
-  // Get year, month, and day components
-  const year = String(date.getFullYear());
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-  const day = String(date.getDate()).padStart(2, "0");
-
-  // Concatenate components in the desired format
-  const formattedDate = `${year}-${month}-${day}`;
-
-  return formattedDate;
+	return formattedTime.trim();
 };
 
 export const firstLetterUppercase = (word) => String(word).toUpperCase()[0];

@@ -27,7 +27,7 @@ import {
 	fetchProjects,
 	updateProject,
 } from "../../features/project/projectActions";
-import { ACTION_MODE, PROJECT_STATUS } from "../../utils/constants";
+import { ACTION_MODE } from "../../utils/constants";
 
 import { Input } from "@/components/ui/input";
 import { sortByDate, sortByStatus } from "@/utils/sort";
@@ -56,9 +56,11 @@ import { columns } from "./columns";
 
 import { toast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
+import { PROJECT_STATUS, selectAllProjects } from "../../features/project/projectSlice";
 const ProjectTable = () => {
 	const dispatch = useDispatch();
-	const { projects, loading, success } = useSelector((state) => state.projects);
+	const projects = useSelector(selectAllProjects)
+	const {  loading, success } = useSelector((state) => state.projects);
 	const { userInfo } = useSelector((state) => state.user);
 
 	const [sorting, setSorting] = useState([]);

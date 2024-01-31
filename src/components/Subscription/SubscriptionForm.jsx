@@ -23,11 +23,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { ACTION_MODE } from "@/utils/constants";
+import { formatDate } from "@/utils/format";
 import * as z from "zod";
 
 const SubscriptionFormSchema = z.object({
@@ -167,16 +167,16 @@ const SubscriptionForm = ({ action, onSubmit, initialData, afterSubmit }) => {
 													{field.value?.from ? (
 														field.value.to ? (
 															<>
-																{format(field.value.from, "LLL dd, y")} -{" "}
-																{format(field.value.to, "LLL dd, y")}
+																{formatDate(field.value.from)} -{" "}
+																{formatDate(field.value.to)}
 															</>
 														) : (
-															format(field.value.from, "LLL dd, y")
+															formatDate(field.value.from)
 														)
 													) : (
 														<span>Pick a date</span>
 													)}
-													<CalendarIcon size={16} />
+												<CalendarIcon size={16} />
 												</Button>
 											</FormControl>
 										</PopoverTrigger>

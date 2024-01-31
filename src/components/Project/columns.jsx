@@ -9,7 +9,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ACTION_MODE, PROJECT_STATUS } from "@/utils/constants";
+import { ACTION_MODE } from "@/utils/constants";
 import { formatCurrency, formatDate, formatSeconds } from "@/utils/format";
 import { ArrowDown, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -18,6 +18,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import ProjectForm from "./ProjectForm";
+import { PROJECT_STATUS } from "@/features/project/projectSlice";
 
 const SortButton = ({ column, children }) => (
 	<Button

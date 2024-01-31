@@ -46,7 +46,7 @@ import {
 	deleteSubscription,
 	fetchSubscriptions,
 	updateSubscription,
-} from "../../features/subscription/subscriptionActions";
+} from "../../features/subscriptions/subscriptionsActions";
 import { ACTION_MODE } from "../../utils/constants";
 import { Typography } from "../ui/typography";
 import SubscriptionForm from "./SubscriptionForm";
@@ -55,7 +55,7 @@ import { columns } from "./columns";
 const Subscription = () => {
 	const dispatch = useDispatch();
 	const {
-		data: subscriptions,
+		subscriptions,
 		loading,
 		success,
 	} = useSelector((state) => state.subscriptions);
