@@ -50,9 +50,9 @@ const ThemeSelector = () => {
 
 const ThemeSelectorItem = ({ theme }) => {
 	return (
-		<Label htmlFor={theme} data-theme={theme} className="">
-			<Card className="flex h-[10rem] flex-col overflow-hidden border-2">
-				<div className="h-[100px] border-b-2">
+		<Label htmlFor={theme} data-theme={theme}>
+			<Card className="flex h-[10rem] flex-col overflow-hidden border-2 [&:has([data-state=checked])]:border-primary">
+				<div className="h-[100px] border-b-2 border-inherit">
 					<div className="flex h-[24px] items-center gap-1 bg-accent px-2">
 						<div className="h-[8px] w-[40px] rounded-full bg-primary"></div>
 						<div className="h-[8px] w-[40px] rounded-full bg-primary"></div>
